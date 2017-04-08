@@ -4,5 +4,10 @@
 * https://www.facebook.com/groups/kagglebreak/
 * https://drive.google.com/drive/folders/0B2l0iH28o85xcHJRNWNUc1FvbEk
 * 장소 :kosslab (선릉역 근처)
-* 격주 토요
+* 격주 토요일
 * 스터디 KossLab(공개SW 개발자센터)에서 장소를 지원하고 있습니다.
+
+|요일   |주제   |발표자   |발표자료   |   |
+|---|---|---|---|---|
+|2017.04.08(토)|Integer Sequence Learning   |이상열|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/integer/Integer%20Sequence%20_%EC%9B%8C%ED%82%B9%EC%BA%90%EA%B8%80_%EC%8B%9C%EC%A6%8C1_%EC%A3%BC%EB%A7%90%EB%B0%98%20.ipynb)   |   |
+
