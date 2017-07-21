@@ -14,16 +14,16 @@
 
 |요일   |주제   |발표자   |발표자료   |
 |---|---|---|---|---|
-|2017.08.19(토)| ||
+|2017.08.19(토)| |
 
 
 * 시즌 1 주제
 
 |요일   |주제   |발표자   |발표자료   | 
-|---|---|---|---|---|
-|2017.04.08(토)|Integer Sequence Learning   |이상열|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/integer/Integer%20Sequence%20_%EC%9B%8C%ED%82%B9%EC%BA%90%EA%B8%80_%EC%8B%9C%EC%A6%8C1_%EC%A3%BC%EB%A7%90%EB%B0%98%20.ipynb)   |   |
-|2017.04.22(토)|rental listing   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/rental_listing/rental_listing_0422.ipynb)   |   |
-|2017.04.22(토)|Prudential   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/prudential/Prudential_Insuranse.html.docx)   |   |
-|2017.04.22(토)|Quora   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/quora/quora_1.ipynb)   |   |
+|---|---|---|---|
+|2017.04.08(토)|Integer Sequence Learning   |이상열|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/integer/Integer%20Sequence%20_%EC%9B%8C%ED%82%B9%EC%BA%90%EA%B8%80_%EC%8B%9C%EC%A6%8C1_%EC%A3%BC%EB%A7%90%EB%B0%98%20.ipynb)   |   
+|2017.04.22(토)|rental listing   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/rental_listing/rental_listing_0422.ipynb)   |   
+|2017.04.22(토)|Prudential   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/prudential/Prudential_Insuranse.html.docx)   |   
+|2017.04.22(토)|Quora   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/quora/quora_1.ipynb)   |   
 
 
