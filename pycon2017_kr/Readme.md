@@ -12,8 +12,8 @@
 ### 자료 링크
 - 실습의 해당되는 코드는 github 및 링크를 통해 공유드립니다. 
 github을 clone 또는 download 해주시면 됩니다.
-- 워킹캐글(캐글뽀개기 스터디 이름) Github : [Tutorial Github](...)
-- 자료 링크 : [다운로드]()
+- 워킹캐글(캐글뽀개기 스터디 이름) Github : [Tutorial Github](https://github.com/KaggleBreak/walkingkaggle)
+- 자료 링크 : [다운로드](https://www.dropbox.com/s/0ggaqvshr29emzj/pycon2017_kr.zip?dl=0) / 기한 있음
 
 
 ### 발표 자료 보는 법 (jupyter notebook)
