@@ -11854,7 +11854,7 @@ a.anchor-link {
 </tr>
 <tr>
 <td style="text-align:left">11:00 ~ 11:50</td>
-<td style="text-align:center">(두 번째 시간) 데이터 전처리 및 탐색</td>
+<td style="text-align:center">(두 번째 시간) AWS 세팅하기 및 데이터 탐색</td>
 </tr>
 <tr>
 <td style="text-align:left">12:00 ~ 12:50</td>
@@ -11868,12 +11868,13 @@ a.anchor-link {
 </table>
 <ul>
 <li>각 타임 별로 중간에 10분식 쉬겠습니다. 네 번째 시간은 식사 관계로 빨리 끝날 수 있습니다.</li>
+<li>윈도우 환경에서 xgboost 라이브러리 설치 문제로 aws(아마존 웹 서비스) 세팅을 하겠습니다. </li>
 <li>두 번째 시간부터 실습이 이루어질 예정입니다. 실습은 파이썬 3.5 버전 이상으로 준비해주세요.</li>
 </ul>
 <h3 id="&#51088;&#47308;-&#47553;&#53356;">&#51088;&#47308; &#47553;&#53356;<a class="anchor-link" href="#&#51088;&#47308;-&#47553;&#53356;">&#182;</a></h3><ul>
 <li>실습의 해당되는 코드는 github 및 링크를 통해 공유드립니다. 
 github을 clone 또는 download 해주시면 됩니다.</li>
-<li>워킹캐글(캐글뽀개기 스터디 이름) Github : <a href="https://github.com/KaggleBreak/walkingkaggle/tree/master/pycon2017_kr">Tutorial Github</a></li>
+<li>워킹캐글(캐글뽀개기 스터디 이름) Github : <a href="https://github.com/KaggleBreak/walkingkaggle">Tutorial Github</a></li>
 <li>자료 링크 : <a href="https://www.dropbox.com/s/0ggaqvshr29emzj/pycon2017_kr.zip?dl=0">다운로드</a></li>
 </ul>
 <h3 id="&#48156;&#54364;-&#51088;&#47308;-&#48372;&#45716;-&#48277;-(jupyter-notebook)">&#48156;&#54364; &#51088;&#47308; &#48372;&#45716; &#48277; (jupyter notebook)<a class="anchor-link" href="#&#48156;&#54364;-&#51088;&#47308;-&#48372;&#45716;-&#48277;-(jupyter-notebook)">&#182;</a></h3><ul>
@@ -13197,7 +13198,7 @@ memory usage: 8.5+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][[</span><span class="s1">&#39;bathrooms&#39;</span><span class="p">,</span> <span class="s1">&#39;bedrooms&#39;</span><span class="p">,</span> <span class="s1">&#39;listing_id&#39;</span><span class="p">,</span> <span class="s1">&#39;building_id&#39;</span><span class="p">,</span> <span class="s1">&#39;manager_id&#39;</span><span class="p">,</span>
@@ -13213,7 +13214,7 @@ memory usage: 8.5+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -13444,7 +13445,7 @@ Name: 100004, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;interest_level&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">train_df</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;medium&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">])</span>
@@ -13800,7 +13801,7 @@ JZGJiIiIgZVEJiIiIgZWEpmIiIgYWP8FcYZwyu1zbO4AAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;interest_level&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -13814,7 +13815,7 @@ JZGJiIiIgZVEJiIiIgZWEpmIiIgYWP8FcYZwyu1zbO4AAAAASUVORK5CYII=
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -13880,7 +13881,7 @@ JZGJiIiIgZVEJiIiIgZWEpmIiIgYWP8FcYZwyu1zbO4AAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">train_df</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">],</span> <span class="n">hist</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300000</span><span class="p">))</span>
@@ -13894,7 +13895,7 @@ JZGJiIiIgZVEJiIiIgZWEpmIiIgYWP8FcYZwyu1zbO4AAAAASUVORK5CYII=
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -14219,7 +14220,7 @@ gg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">train_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;interest_level&#39;</span><span class="p">):</span>
@@ -15377,7 +15378,7 @@ RU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">bathrooms</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;bathrooms&#39;</span><span class="p">,</span> <span class="s1">&#39;interest_level&#39;</span><span class="p">])[</span><span class="s1">&#39;bathrooms&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;interest_level&#39;</span><span class="p">)</span>
@@ -16347,7 +16348,7 @@ daZAISIiInX2/wHTLxGwl4K1ZAAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">bedrooms</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;bedrooms&#39;</span><span class="p">,</span> <span class="s1">&#39;interest_level&#39;</span><span class="p">])[</span><span class="s1">&#39;bedrooms&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;interest_level&#39;</span><span class="p">)</span>
@@ -17244,7 +17245,7 @@ UIiIiEjQFChEREQkaAoUIiIiEjQFChEREQmaAoWIiIgETYFCREREgqZAISIiIkFToBAREZGg/T8R
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_df</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">train_df</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">])</span>
@@ -17265,7 +17266,7 @@ UIiIiEjQFChEREQkaAoUIiIiEjQFChEREQmaAoWIiIgETYFCREREgqZAISIiIkFToBAREZGg/T8R
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">weeks</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;week&#39;</span><span class="p">,</span> <span class="s1">&#39;interest_level&#39;</span><span class="p">])[</span><span class="s1">&#39;week&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;interest_level&#39;</span><span class="p">)</span>
@@ -17560,7 +17561,7 @@ wAAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">weekdays</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="s1">&#39;interest_level&#39;</span><span class="p">])[</span><span class="s1">&#39;weekday&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;interest_level&#39;</span><span class="p">)</span>
@@ -28624,7 +28625,7 @@ Uvy1AAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#basic features</span>
@@ -28727,7 +28728,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 원래 있던 original값들과 새로만든 feature를 넣어 feature_to_use 리스트 만듬</span>
@@ -28741,7 +28742,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -28755,7 +28756,7 @@ memory usage: 11.3+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[59]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -28774,15 +28775,15 @@ memory usage: 11.3+ MB
       <th>latitude</th>
       <th>listing_id</th>
       <th>...</th>
+      <th>street_address</th>
+      <th>week</th>
+      <th>hour</th>
+      <th>weekday</th>
+      <th>num_photos</th>
       <th>num_features</th>
       <th>num_words</th>
-      <th>interest</th>
       <th>month</th>
       <th>day_of_week</th>
-      <th>log_price</th>
-      <th>log_num_photos</th>
-      <th>log_num_features</th>
-      <th>log_num_words</th>
       <th>price_t</th>
     </tr>
   </thead>
@@ -28800,15 +28801,15 @@ memory usage: 11.3+ MB
       <td>40.7145</td>
       <td>7211212</td>
       <td>...</td>
+      <td>792 Metropolitan Avenue</td>
+      <td>25</td>
+      <td>2</td>
+      <td>4</td>
+      <td>5</td>
       <td>0</td>
       <td>95</td>
-      <td>1</td>
       <td>6</td>
       <td>Friday</td>
-      <td>8.006368</td>
-      <td>1.609438</td>
-      <td>-inf</td>
-      <td>4.553877</td>
       <td>1000.0</td>
     </tr>
     <tr>
@@ -28824,15 +28825,15 @@ memory usage: 11.3+ MB
       <td>40.7947</td>
       <td>7150865</td>
       <td>...</td>
+      <td>808 Columbus Avenue</td>
+      <td>23</td>
+      <td>7</td>
+      <td>6</td>
+      <td>11</td>
       <td>5</td>
       <td>9</td>
-      <td>0</td>
       <td>6</td>
       <td>Sunday</td>
-      <td>8.606119</td>
-      <td>2.397895</td>
-      <td>1.609438</td>
-      <td>2.197225</td>
       <td>2732.5</td>
     </tr>
     <tr>
@@ -28848,15 +28849,15 @@ memory usage: 11.3+ MB
       <td>40.7388</td>
       <td>6887163</td>
       <td>...</td>
+      <td>241 W 13 Street</td>
+      <td>15</td>
+      <td>22</td>
+      <td>6</td>
+      <td>8</td>
       <td>4</td>
       <td>94</td>
-      <td>2</td>
       <td>4</td>
       <td>Sunday</td>
-      <td>7.955074</td>
-      <td>2.079442</td>
-      <td>1.386294</td>
-      <td>4.543295</td>
       <td>2850.0</td>
     </tr>
     <tr>
@@ -28872,15 +28873,15 @@ memory usage: 11.3+ MB
       <td>40.7539</td>
       <td>6888711</td>
       <td>...</td>
+      <td>333 East 49th Street</td>
+      <td>16</td>
+      <td>21</td>
+      <td>0</td>
+      <td>3</td>
       <td>2</td>
       <td>80</td>
-      <td>0</td>
       <td>4</td>
       <td>Monday</td>
-      <td>8.094073</td>
-      <td>1.098612</td>
-      <td>0.693147</td>
-      <td>4.382027</td>
       <td>3275.0</td>
     </tr>
     <tr>
@@ -28896,20 +28897,20 @@ memory usage: 11.3+ MB
       <td>40.8241</td>
       <td>6934781</td>
       <td>...</td>
+      <td>500 West 143rd Street</td>
+      <td>17</td>
+      <td>20</td>
+      <td>3</td>
+      <td>3</td>
       <td>1</td>
       <td>68</td>
-      <td>0</td>
       <td>4</td>
       <td>Thursday</td>
-      <td>8.116716</td>
-      <td>1.098612</td>
-      <td>0.000000</td>
-      <td>4.219508</td>
       <td>837.5</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 29 columns</p>
+<p>5 rows × 24 columns</p>
 </div>
 </div>
 
@@ -28921,7 +28922,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># train data 의 수만큼의 list를 만듬</span>
@@ -28939,7 +28940,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 데이터를 5등분할 계획</span>
@@ -29214,7 +29215,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 이번엔 train데이터를 통해 집계한 매니저에 대한 &#39;interest level별 count정보&#39;로 test데이터의 &#39;manager에 대한 interest level별 비율정보&#39;을 구함</span>
@@ -29465,7 +29466,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#위에서 애써만든 매니저 평가정보를 여기에서 feature에 포함시킴</span>
@@ -29481,7 +29482,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[69]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">features_to_use</span>
@@ -29495,7 +29496,7 @@ memory usage: 11.3+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[69]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -29526,7 +29527,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 범주형 데이터를 넣는 과정</span>
@@ -29560,7 +29561,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">le</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelEncoder</span><span class="p">()</span>
@@ -29573,7 +29574,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">le</span><span class="o">.</span><span class="n">fit</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
@@ -29587,7 +29588,7 @@ memory usage: 11.3+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[72]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -29602,7 +29603,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">le</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
@@ -29616,7 +29617,7 @@ memory usage: 11.3+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[73]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -29631,7 +29632,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">le</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelEncoder</span><span class="p">()</span>
@@ -29647,7 +29648,7 @@ memory usage: 11.3+ MB
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[74]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -29933,7 +29934,7 @@ memory usage: 11.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># original데이터의 features컬럼을 tfidf 팩터화</span>
@@ -29999,7 +30000,7 @@ Name: features, dtype: object
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># xgb에 넣기위해 자료구조를 만듬</span>
@@ -30033,7 +30034,7 @@ Name: features, dtype: object
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">train_X</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">,]</span><span class="o">.</span><span class="n">todense</span><span class="p">())</span>
@@ -30066,7 +30067,7 @@ Name: features, dtype: object
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[90]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">column_1</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="n">features_to_use</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -30172,7 +30173,7 @@ $$ Entropy = -\sum_jp_j\log_2p_j $$$$ Gini = 1-\sum_jp_j^2 $$<p><img src="https:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#https://flonelin.wordpress.com/2016/07/26/tuning-xgboostextream-gradient-boosting/</span>
@@ -30215,7 +30216,7 @@ $$ Entropy = -\sum_jp_j\log_2p_j $$$$ Gini = 1-\sum_jp_j^2 $$<p><img src="https:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">cv_scores</span> <span class="o">=</span> <span class="p">[]</span>
@@ -30239,114 +30240,127 @@ $$ Entropy = -\sum_jp_j\log_2p_j $$$$ Gini = 1-\sum_jp_j^2 $$<p><img src="https:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[0]	train-mlogloss:1.07882	test-mlogloss:1.07921
+<pre>[0]	train-mlogloss:1.07802	test-mlogloss:1.07845
 Multiple eval metrics have been passed: &#39;test-mlogloss&#39; will be used for early stopping.
 
 Will train until test-mlogloss hasn&#39;t improved in 20 rounds.
-[1]	train-mlogloss:1.06182	test-mlogloss:1.06235
-[2]	train-mlogloss:1.04372	test-mlogloss:1.04464
-[3]	train-mlogloss:1.02743	test-mlogloss:1.02863
-[4]	train-mlogloss:1.01082	test-mlogloss:1.01244
-[5]	train-mlogloss:0.996569	test-mlogloss:0.9984
-[6]	train-mlogloss:0.98271	test-mlogloss:0.984843
-[7]	train-mlogloss:0.96818	test-mlogloss:0.970623
-[8]	train-mlogloss:0.954777	test-mlogloss:0.957553
-[9]	train-mlogloss:0.942887	test-mlogloss:0.94588
-[10]	train-mlogloss:0.931476	test-mlogloss:0.934709
-[11]	train-mlogloss:0.919743	test-mlogloss:0.923353
-[12]	train-mlogloss:0.908295	test-mlogloss:0.91226
-[13]	train-mlogloss:0.897623	test-mlogloss:0.90186
-[14]	train-mlogloss:0.887504	test-mlogloss:0.892028
-[15]	train-mlogloss:0.877709	test-mlogloss:0.882517
-[16]	train-mlogloss:0.86863	test-mlogloss:0.87366
-[17]	train-mlogloss:0.859595	test-mlogloss:0.864922
-[18]	train-mlogloss:0.849939	test-mlogloss:0.855624
-[19]	train-mlogloss:0.841201	test-mlogloss:0.847243
-[20]	train-mlogloss:0.833063	test-mlogloss:0.839419
-[21]	train-mlogloss:0.825563	test-mlogloss:0.832119
-[22]	train-mlogloss:0.817147	test-mlogloss:0.82404
-[23]	train-mlogloss:0.809692	test-mlogloss:0.81687
-[24]	train-mlogloss:0.802467	test-mlogloss:0.809894
-[25]	train-mlogloss:0.796025	test-mlogloss:0.803697
-[26]	train-mlogloss:0.789748	test-mlogloss:0.797673
-[27]	train-mlogloss:0.78417	test-mlogloss:0.792309
-[28]	train-mlogloss:0.777794	test-mlogloss:0.786235
-[29]	train-mlogloss:0.772089	test-mlogloss:0.780836
-[30]	train-mlogloss:0.766599	test-mlogloss:0.775575
-[31]	train-mlogloss:0.760376	test-mlogloss:0.769747
-[32]	train-mlogloss:0.754581	test-mlogloss:0.76431
-[33]	train-mlogloss:0.749127	test-mlogloss:0.759101
-[34]	train-mlogloss:0.743827	test-mlogloss:0.754124
-[35]	train-mlogloss:0.739318	test-mlogloss:0.749772
-[36]	train-mlogloss:0.734503	test-mlogloss:0.745263
-[37]	train-mlogloss:0.729458	test-mlogloss:0.740525
-[38]	train-mlogloss:0.725024	test-mlogloss:0.736362
-[39]	train-mlogloss:0.720648	test-mlogloss:0.732251
-[40]	train-mlogloss:0.716754	test-mlogloss:0.728638
-[41]	train-mlogloss:0.712609	test-mlogloss:0.724753
-[42]	train-mlogloss:0.708521	test-mlogloss:0.72093
-[43]	train-mlogloss:0.704906	test-mlogloss:0.717588
-[44]	train-mlogloss:0.701529	test-mlogloss:0.714398
-[45]	train-mlogloss:0.697427	test-mlogloss:0.710597
-[46]	train-mlogloss:0.693869	test-mlogloss:0.707258
-[47]	train-mlogloss:0.690496	test-mlogloss:0.704122
-[48]	train-mlogloss:0.686943	test-mlogloss:0.700827
-[49]	train-mlogloss:0.68446	test-mlogloss:0.698516
-[50]	train-mlogloss:0.681746	test-mlogloss:0.696003
-[51]	train-mlogloss:0.679055	test-mlogloss:0.693486
-[52]	train-mlogloss:0.676471	test-mlogloss:0.691056
-[53]	train-mlogloss:0.674122	test-mlogloss:0.688926
-[54]	train-mlogloss:0.671927	test-mlogloss:0.686844
-[55]	train-mlogloss:0.669294	test-mlogloss:0.68444
-[56]	train-mlogloss:0.666165	test-mlogloss:0.681593
-[57]	train-mlogloss:0.663225	test-mlogloss:0.678937
-[58]	train-mlogloss:0.66061	test-mlogloss:0.676529
-[59]	train-mlogloss:0.658537	test-mlogloss:0.674637
-[60]	train-mlogloss:0.655788	test-mlogloss:0.672137
-[61]	train-mlogloss:0.653119	test-mlogloss:0.669763
-[62]	train-mlogloss:0.650674	test-mlogloss:0.667567
-[63]	train-mlogloss:0.649006	test-mlogloss:0.666063
-[64]	train-mlogloss:0.64674	test-mlogloss:0.664026
-[65]	train-mlogloss:0.644626	test-mlogloss:0.662141
-[66]	train-mlogloss:0.642516	test-mlogloss:0.660307
-[67]	train-mlogloss:0.6408	test-mlogloss:0.658744
-[68]	train-mlogloss:0.639115	test-mlogloss:0.657207
-[69]	train-mlogloss:0.637701	test-mlogloss:0.655987
-[70]	train-mlogloss:0.63614	test-mlogloss:0.654593
-[71]	train-mlogloss:0.634253	test-mlogloss:0.652963
-[72]	train-mlogloss:0.632482	test-mlogloss:0.651379
-[73]	train-mlogloss:0.630541	test-mlogloss:0.649659
-[74]	train-mlogloss:0.628906	test-mlogloss:0.648186
-[75]	train-mlogloss:0.627477	test-mlogloss:0.646952
-[76]	train-mlogloss:0.62616	test-mlogloss:0.645813
-[77]	train-mlogloss:0.624513	test-mlogloss:0.644379
-[78]	train-mlogloss:0.62338	test-mlogloss:0.643375
-[79]	train-mlogloss:0.621904	test-mlogloss:0.642092
-[80]	train-mlogloss:0.620827	test-mlogloss:0.641213
-[81]	train-mlogloss:0.619306	test-mlogloss:0.63989
-[82]	train-mlogloss:0.618299	test-mlogloss:0.639031
-[83]	train-mlogloss:0.616397	test-mlogloss:0.637369
-[84]	train-mlogloss:0.614872	test-mlogloss:0.636087
-[85]	train-mlogloss:0.613405	test-mlogloss:0.634819
-[86]	train-mlogloss:0.612415	test-mlogloss:0.633909
-[87]	train-mlogloss:0.611441	test-mlogloss:0.633092
-[88]	train-mlogloss:0.610045	test-mlogloss:0.631935
-[89]	train-mlogloss:0.6091	test-mlogloss:0.631081
-[90]	train-mlogloss:0.6082	test-mlogloss:0.630352
-[91]	train-mlogloss:0.607257	test-mlogloss:0.62955
-[92]	train-mlogloss:0.605956	test-mlogloss:0.628471
-[93]	train-mlogloss:0.604602	test-mlogloss:0.627351
-[94]	train-mlogloss:0.603862	test-mlogloss:0.626776
-[95]	train-mlogloss:0.602479	test-mlogloss:0.625658
-[96]	train-mlogloss:0.601292	test-mlogloss:0.624712
-[97]	train-mlogloss:0.600234	test-mlogloss:0.623817
-[98]	train-mlogloss:0.599259	test-mlogloss:0.623001
-[99]	train-mlogloss:0.598062	test-mlogloss:0.622061
-[0.62206123753923215]
+[1]	train-mlogloss:1.05855	test-mlogloss:1.05944
+[2]	train-mlogloss:1.04006	test-mlogloss:1.04137
+[3]	train-mlogloss:1.02317	test-mlogloss:1.02484
+[4]	train-mlogloss:1.00628	test-mlogloss:1.00831
+[5]	train-mlogloss:0.990646	test-mlogloss:0.993079
+[6]	train-mlogloss:0.975807	test-mlogloss:0.978733
+[7]	train-mlogloss:0.960955	test-mlogloss:0.964351
+[8]	train-mlogloss:0.946797	test-mlogloss:0.950701
+[9]	train-mlogloss:0.933614	test-mlogloss:0.937819
+[10]	train-mlogloss:0.920415	test-mlogloss:0.925084
+[11]	train-mlogloss:0.909233	test-mlogloss:0.914254
+[12]	train-mlogloss:0.89739	test-mlogloss:0.902803
+[13]	train-mlogloss:0.886318	test-mlogloss:0.892003
+[14]	train-mlogloss:0.875652	test-mlogloss:0.881707
+[15]	train-mlogloss:0.864897	test-mlogloss:0.871346
+[16]	train-mlogloss:0.85477	test-mlogloss:0.861568
+[17]	train-mlogloss:0.845077	test-mlogloss:0.852204
+[18]	train-mlogloss:0.835675	test-mlogloss:0.843141
+[19]	train-mlogloss:0.826632	test-mlogloss:0.834557
+[20]	train-mlogloss:0.817736	test-mlogloss:0.826114
+[21]	train-mlogloss:0.809767	test-mlogloss:0.818397
+[22]	train-mlogloss:0.802585	test-mlogloss:0.81147
+[23]	train-mlogloss:0.794789	test-mlogloss:0.804096
+[24]	train-mlogloss:0.787175	test-mlogloss:0.796872
+[25]	train-mlogloss:0.780028	test-mlogloss:0.790061
+[26]	train-mlogloss:0.773035	test-mlogloss:0.783386
+[27]	train-mlogloss:0.76608	test-mlogloss:0.776836
+[28]	train-mlogloss:0.759531	test-mlogloss:0.770691
+[29]	train-mlogloss:0.753641	test-mlogloss:0.765103
+[30]	train-mlogloss:0.747878	test-mlogloss:0.759623
+[31]	train-mlogloss:0.741785	test-mlogloss:0.753838
+[32]	train-mlogloss:0.736024	test-mlogloss:0.748443
+[33]	train-mlogloss:0.730348	test-mlogloss:0.743164
+[34]	train-mlogloss:0.725112	test-mlogloss:0.738219
+[35]	train-mlogloss:0.720029	test-mlogloss:0.73345
+[36]	train-mlogloss:0.715023	test-mlogloss:0.728828
+[37]	train-mlogloss:0.709964	test-mlogloss:0.724083
+[38]	train-mlogloss:0.705412	test-mlogloss:0.719848
+[39]	train-mlogloss:0.700918	test-mlogloss:0.715658
+[40]	train-mlogloss:0.696407	test-mlogloss:0.711527
+[41]	train-mlogloss:0.692097	test-mlogloss:0.707557
+[42]	train-mlogloss:0.687689	test-mlogloss:0.703534
+[43]	train-mlogloss:0.684833	test-mlogloss:0.700853
+[44]	train-mlogloss:0.68177	test-mlogloss:0.698038
+[45]	train-mlogloss:0.678109	test-mlogloss:0.694674
+[46]	train-mlogloss:0.67437	test-mlogloss:0.691253
+[47]	train-mlogloss:0.670983	test-mlogloss:0.688137
+[48]	train-mlogloss:0.668166	test-mlogloss:0.68555
+[49]	train-mlogloss:0.665547	test-mlogloss:0.683112
+[50]	train-mlogloss:0.663146	test-mlogloss:0.68093
+[51]	train-mlogloss:0.659905	test-mlogloss:0.677947
+[52]	train-mlogloss:0.656829	test-mlogloss:0.675207
+[53]	train-mlogloss:0.653913	test-mlogloss:0.672578
+[54]	train-mlogloss:0.650819	test-mlogloss:0.669804
+[55]	train-mlogloss:0.648695	test-mlogloss:0.667858
+[56]	train-mlogloss:0.645763	test-mlogloss:0.665231
+[57]	train-mlogloss:0.643026	test-mlogloss:0.662825
+[58]	train-mlogloss:0.640268	test-mlogloss:0.660338
+[59]	train-mlogloss:0.637776	test-mlogloss:0.658099
+[60]	train-mlogloss:0.635827	test-mlogloss:0.656361
+[61]	train-mlogloss:0.633886	test-mlogloss:0.654692
+[62]	train-mlogloss:0.631642	test-mlogloss:0.652636
+[63]	train-mlogloss:0.629217	test-mlogloss:0.650466
+[64]	train-mlogloss:0.626883	test-mlogloss:0.648366
+[65]	train-mlogloss:0.624904	test-mlogloss:0.646596
+[66]	train-mlogloss:0.622758	test-mlogloss:0.644779
+[67]	train-mlogloss:0.62127	test-mlogloss:0.643492
+[68]	train-mlogloss:0.619733	test-mlogloss:0.642121
+[69]	train-mlogloss:0.617841	test-mlogloss:0.640509
+[70]	train-mlogloss:0.615754	test-mlogloss:0.63874
+[71]	train-mlogloss:0.613898	test-mlogloss:0.637193
+[72]	train-mlogloss:0.611951	test-mlogloss:0.635472
+[73]	train-mlogloss:0.610032	test-mlogloss:0.633852
+[74]	train-mlogloss:0.608119	test-mlogloss:0.632191
+[75]	train-mlogloss:0.606296	test-mlogloss:0.630699
+[76]	train-mlogloss:0.604482	test-mlogloss:0.629196
+[77]	train-mlogloss:0.603215	test-mlogloss:0.628177
+[78]	train-mlogloss:0.60183	test-mlogloss:0.627012
+[79]	train-mlogloss:0.600526	test-mlogloss:0.6259
+[80]	train-mlogloss:0.598993	test-mlogloss:0.624625
+[81]	train-mlogloss:0.597523	test-mlogloss:0.623358
+[82]	train-mlogloss:0.596238	test-mlogloss:0.622273
+[83]	train-mlogloss:0.594615	test-mlogloss:0.620973
+[84]	train-mlogloss:0.59304	test-mlogloss:0.61969
+[85]	train-mlogloss:0.591698	test-mlogloss:0.618508
+[86]	train-mlogloss:0.590412	test-mlogloss:0.617407
+[87]	train-mlogloss:0.589125	test-mlogloss:0.616357
+[88]	train-mlogloss:0.587624	test-mlogloss:0.615109
+[89]	train-mlogloss:0.586275	test-mlogloss:0.614008
+[90]	train-mlogloss:0.585054	test-mlogloss:0.613042
+[91]	train-mlogloss:0.583864	test-mlogloss:0.612063
+[92]	train-mlogloss:0.582466	test-mlogloss:0.610903
+[93]	train-mlogloss:0.581137	test-mlogloss:0.609787
+[94]	train-mlogloss:0.579827	test-mlogloss:0.608754
+[95]	train-mlogloss:0.57865	test-mlogloss:0.607827
+[96]	train-mlogloss:0.577479	test-mlogloss:0.606906
+[97]	train-mlogloss:0.576333	test-mlogloss:0.605995
+[98]	train-mlogloss:0.575465	test-mlogloss:0.605321
+[99]	train-mlogloss:0.574224	test-mlogloss:0.60438
+[0.60437993390259015]
 </pre>
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+</div>
 </div>
 </div>
 
@@ -31567,14 +31581,14 @@ IiIiIpKBkicREREREZEMlDyJiIiIiIhkoORJREREREQkg/8HVWLorojWP74AAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[102]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">preds</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">feature_names</span> <span class="o">=</span> <span class="n">runXGB</span><span class="p">(</span><span class="n">train_X</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span> <span class="n">test_X</span><span class="p">,</span> <span class="n">num_rounds</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">out_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
 <span class="n">out_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span> <span class="s2">&quot;low&quot;</span><span class="p">]</span>
 <span class="n">out_df</span><span class="p">[</span><span class="s2">&quot;listing_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">listing_id</span><span class="o">.</span><span class="n">values</span>
-<span class="n">out_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/xgb_starter_num_rounds100.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">out_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data/xgb_starter_num_rounds100_sangyeol.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
 </div>
