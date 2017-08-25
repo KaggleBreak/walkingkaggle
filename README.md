@@ -1,7 +1,7 @@
 # 워킹캐글 Part2 
 캐글뽀개기 주말반(워킹캐글) 스터디 자료모음
-시즌 1 : 2017/4/8 ~ 2017/5/13
-시즌 2 : 2017/08/26 ~ 미정
+- 시즌 1 : 2017/4/8 ~ 2017/5/13
+- 시즌 2 : 2017/08/26 ~ 미정
 
 * https://www.facebook.com/groups/kagglebreak/
 * https://drive.google.com/drive/folders/0B2l0iH28o85xcHJRNWNUc1FvbEk
@@ -14,7 +14,7 @@
 
 |요일   |주제   |발표자   |발표자료   |
 |---|---|---|---|
-|2017.08.26(토)| |
+|2017.08.26(토)|이상열|[스터디 소개](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/house_prices_tutorial.html)
 
 
 * 시즌 1 주제
