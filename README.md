@@ -14,7 +14,11 @@
 
 |요일   |주제   |발표자   |발표자료   |
 |---|---|---|---|
-|2017.08.26(토)|이상열|[스터디 소개](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/house_prices_tutorial.html)
+|2017.08.26(토)|스터디 소개|이상열|[스터디 소개](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/house_prices_tutorial.html)
+|2017.09.09(토)|택시 R|택시 R팀|
+||택시 Python (A)|택시 Python A팀|
+||택시 Python (B)|택시 Python B팀|
+||Zilow Python|Zilow Python팀|
 
 
 * 시즌 1 주제
@@ -23,7 +27,7 @@
 |---|---|---|---|
 |2017.04.08(토)|Integer Sequence Learning   |이상열|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/integer/Integer%20Sequence%20_%EC%9B%8C%ED%82%B9%EC%BA%90%EA%B8%80_%EC%8B%9C%EC%A6%8C1_%EC%A3%BC%EB%A7%90%EB%B0%98%20.ipynb)   |   
 |2017.04.22(토)|rental listing   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/rental_listing/rental_listing_0422.ipynb)   |   
-|2017.04.22(토)|Prudential   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/prudential/Prudential_Insuranse.html.docx)   |   
-|2017.04.22(토)|Quora   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/quora/quora_1.ipynb)   |   
+||Prudential   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/prudential/Prudential_Insuranse.html.docx)   |   
+||Quora   |팀자료|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/quora/quora_1.ipynb)   |   
 
 
