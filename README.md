@@ -15,7 +15,7 @@
 |요일   |주제   |발표자   |발표자료   |
 |---|---|---|---|
 |2017.08.26(토)|스터디 소개|이상열|[스터디 소개](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/house_prices_tutorial.html)
-|2017.09.09(토)|택시 R|택시 R팀|
+|2017.09.09(토)|택시 R|택시 R팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/R/interactive_R.nb.html)
 ||택시 Python (A)|택시 Python A팀|
 ||택시 Python (B)|택시 Python B팀|
 ||Zilow Python|Zilow Python팀|
