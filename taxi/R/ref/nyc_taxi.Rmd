@@ -1,0 +1,324 @@
+---
+title: "NYC TAXI EDA"
+output: html_notebook
+---
+
+
+
+```{r}
+# Define multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+# 1.2 LOAD DATA
+```{r}
+train <- as.tibble(fread('train.csv'))
+test <- as.tibble(fread('test.csv'))
+# sample_submit <- as.tibble(fread('sample_submission.csv'))
+```
+
+# 1.3 DATA SET STRUCTURE
+We find : 
+
+* vendor id only takes two values(1 or 2), presumably two different taxi company 
+* pickup_datetime needs to be re-formatted into a more useful shape 
+* passenger_count vary from 1 to 9 
+* pickup/dropoff longitude,latitude - coordinate that meter was activated/deactivated
+* store_and_fw_flag - trip data is held in memory or sent immediately (y/n) 
+* trip_duration - target variable 
+```{r}
+# test 
+summary(train)
+glimpse(train)
+
+#train 
+summary(test)
+glimpse(test)
+```
+
+
+# 1.4 MISSING VALUES 
+* no missing value 
+```{r}
+sum(is.na(train))
+sum(is.na(test))
+```
+
+
+# 1.5 COMBINING TRAIN AND TEST 
+* combine two data sets into one to preprocess 
+```{r}
+combine = bind_rows(train %>% mutate(dset="train"),
+                    test %>% mutate(dset="test",
+                                    dropoff_datetime=NA,
+                                    trip_duration=NA))
+
+combine <- combine %>% mutate(dset = factor(dset))
+
+```
+
+# 1.6 REFORMATING FEATURES 
+* turning the data and time from characters into date objects 
+* vendor_id as a factor (easy to visualize relationship with other features)
+* test? 
+```{r}
+train = train %>%
+  mutate(pickup_datetime = ymd_hms(pickup_datetime),
+         dropoff_datetime = ymd_hms(dropoff_datetime),
+         vendor_id = factor(vendor_id),
+         passenger_count = factor(passenger_count))
+```
+
+
+
+# 2.INDIVISUAL FEATURE VISUALIZATION 
+각 변수의 분포를 우선 살펴본다 
+
+pickup/dropoff coordinates
+
+* manhattan only, JFK is another notable hotspot
+```{r}
+set.seed(1234)
+foo <- sample_n(train, 8e3)
+
+leaflet(data = foo) %>% addProviderTiles("Esri.NatGeoWorldMap") %>%
+  addCircleMarkers(~ pickup_longitude, ~pickup_latitude, radius = 1,
+                   color = "blue", fillOpacity = 0.3)
+
+leaflet(data = foo) %>% addProviderTiles("Esri.NatGeoWorldMap") %>%
+  addCircleMarkers(~ dropoff_longitude, ~dropoff_latitude, radius = 1,
+                   color = "blue", fillOpacity = 0.3)
+
+```
+
+trip_duration
+
+* log-normal with a peak of 1000 seconds (27min)
+* several short rides less than 10 sec
+```{r}
+train %>%
+  ggplot(aes(trip_duration)) +
+  geom_histogram(fill = "red", bins = 150) + 
+  scale_x_log10() +
+  scale_y_sqrt()
+```
+
+* tail data
+```{r}
+train %>%
+  arrange(desc(trip_duration)) %>%
+  select(trip_duration, pickup_datetime, dropoff_datetime, everything()) %>%
+  head(10)
+```
+
+* homogeneous, covering between January and Jul
+* drop around late January - weather 
+```{r}
+# View(train)
+p1 <- train %>%
+  ggplot(aes(pickup_datetime)) +
+  geom_histogram(fill = "red", bins = 120) +
+  labs(x = "Pickup dates")
+
+p2 <- train %>%
+  ggplot(aes(dropoff_datetime)) +
+  geom_histogram(fill = "blue", bins = 120) +
+  labs(x = "Dropoff dates")
+
+layout <- matrix(c(1,2),2,1,byrow=FALSE)
+multiplot(p1, p2, layout=layout)
+```
+```{r}
+train %>%
+  group_by(passenger_count) %>%
+  count()
+```
+
+```{r}
+p1 <- train %>%
+  group_by(passenger_count) %>%
+  count() %>%
+  ggplot(aes(passenger_count, n, fill = passenger_count)) +
+  geom_col() +
+  scale_y_sqrt() +
+  theme(legend.position = "none")
+
+p2 <- train %>%
+  ggplot(aes(vendor_id, fill = vendor_id)) +
+  geom_bar() +
+  theme(legend.position = "none")
+
+p3 <- train %>%
+  ggplot(aes(store_and_fwd_flag)) +
+  geom_bar() +
+  theme(legend.position = "none") +
+  scale_y_log10()
+
+p4 <- train %>%
+  mutate(wday = wday(pickup_datetime, label = TRUE)) %>%
+  group_by(wday, vendor_id) %>%
+  count() %>%
+  ggplot(aes(wday, n, colour = vendor_id)) +
+  geom_point(size = 4) +
+  labs(x = "Day of the week", y = "Total number of pickups") +
+  theme(legend.position = "none")
+
+p5 <- train %>%
+  mutate(hpick = hour(pickup_datetime)) %>%
+  group_by(hpick, vendor_id) %>%
+  count() %>%
+  ggplot(aes(hpick, n, color = vendor_id)) +
+  geom_point(size = 4) +
+  labs(x = "Hour of the day", y = "Total number of pickups") +
+  theme(legend.position = "none")
+
+layout <- matrix(c(1,2,3,4,5,5),3,2,byrow=TRUE)
+multiplot(p1, p2, p3, p4, p5, layout=layout)
+```
+* a few trips with zero, or seven to nine passengers
+* The vast majority of rides had only a single passenger
+* Vendor 2 has significantly more trips in this data set than vendor 1
+* monday : quiest / friday : busiest
+* dip during morning and 4pm
+
+```{r}
+p1 <- train %>%
+  mutate(hpick = hour(pickup_datetime),
+         Month = factor(month(pickup_datetime, label = TRUE))) %>%
+  group_by(hpick, Month) %>%
+  count() %>%
+  ggplot(aes(hpick, n, color = Month)) +
+  geom_line(size = 1.5) +
+  labs(x = "Hour of the day", y = "count")
+
+p2 <- train %>%
+  mutate(hpick = hour(pickup_datetime),
+         wday = factor(wday(pickup_datetime, label = TRUE))) %>%
+  group_by(hpick, wday) %>%
+  count() %>%
+  ggplot(aes(hpick, n, color = wday)) +
+  geom_line(size = 1.5) +
+  labs(x = "Hour of the day", y = "count")
+
+layout <- matrix(c(1,2),2,1,byrow=FALSE)
+multiplot(p1, p2, layout=layout)
+```
+* January and June have fewer trips, whereas March and April are busier months
+* The weekend (Sat and Sun, plus Fri to an extend) have higher trip numbers during the early morning ours but lower ones in the morning between 5 and 10
+
+# 3.FEATURE RELATIONS 
+3.1 Pickup date/time vs trip_duration
+```{r}
+p1 <- train %>%
+  mutate(wday = wday(pickup_datetime, label = TRUE)) %>%
+  group_by(wday, vendor_id) %>%
+  summarise(median_duration = median(trip_duration)/60) %>%
+  ggplot(aes(wday, median_duration, color = vendor_id)) +
+  geom_point(size = 4) +
+  labs(x = "Day of the week", y = "Median trip duration [min]")
+
+p2 <- train %>%
+  mutate(hpick = hour(pickup_datetime)) %>%
+  group_by(hpick, vendor_id) %>%
+  summarise(median_duration = median(trip_duration)/60) %>%
+  ggplot(aes(hpick, median_duration, color = vendor_id)) +
+  geom_smooth(method = "loess", span = 1/2) +
+  geom_point(size = 4) +
+  labs(x = "Hour of the day", y = "Median trip duration [min]") +
+  theme(legend.position = "none")
+
+layout <- matrix(c(1,2),2,1,byrow=FALSE)
+multiplot(p1, p2, layout=layout)
+```
+* Vendor 2, the one with the more frequent trips, also has consistently higher trip durations
+* a peak in the early afternoon and dips around 5-6am and 8pm.
+
+
+3.2 Passenger count and Vendor vs trip_duration
+
+```{r}
+train %>%
+  ggplot(aes(passenger_count, trip_duration, color = passenger_count)) +
+  geom_boxplot() +
+  scale_y_log10() +
+  theme(legend.position = "none") +
+  facet_wrap(~ vendor_id) +
+  labs(y = "Trip duration [s]", x = "Number of passengers")
+```
+* Between 1 and 6 passengers the median trip durations are remarkably similar
+
+```{r}
+train %>%
+  ggplot(aes(trip_duration, fill = vendor_id)) +
+  geom_density(position = "stack") +
+  scale_x_log10()
+```
+```{r}
+train %>%
+  group_by(vendor_id) %>%
+  summarise(mean_duration = mean(trip_duration),
+            median_duration = median(trip_duration))
+```
+* the medians are very similar, whereas the means are likely skewed by vendor 2 containing most of the long-duration outliers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

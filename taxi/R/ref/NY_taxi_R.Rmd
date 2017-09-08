@@ -1,0 +1,377 @@
+---
+title: "NY Taxi_R"
+author: "gskim"
+date: "2017년 9월 2일"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+- 데이터와 라이브러리 불러오기
+
+```{r, echo=TRUE}
+suppressMessages({
+    
+knitr::opts_chunk$set(message=F)
+library(data.table)
+library(pacman)
+library(geosphere)
+library(lubridate)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(caret)
+library(corrplot)
+library(leaflet)
+library(stringr)
+library(rgdal)
+ 
+train = read_csv("C:/Users/gskim/Desktop/워킹캐글/train.csv")
+test = read_csv("C:/Users/gskim/Desktop/워킹캐글/test.csv")
+ })
+```
+
+
+- 결측치 탐색
+
+```{r, echo=TRUE}
+sum(is.na(train))
+sum(is.na(test))
+```
+
+결측치 없음
+
+
+- 날짜 변수 수정
+
+Pickup_datetime과 dropoff_datetime은 total duration time을 계산하는데 필요한 중요 변수
+```{r, echo=TRUE}
+library(lubridate)
+train$pickup_hour <- hour(train$pickup_datetime)
+train$pickup_week <- week(train$pickup_datetime)
+train$pickup_month <- month(train$pickup_datetime)
+train$pickup_weekdays <- weekdays(train$pickup_datetime)
+train$pickup_weekend <- ifelse(train$pickup_weekdays==1 | train$pickup_weekdays==7,"Weekend","not-Weekend")
+
+train = as.data.table(train)
+
+train[,pickup_datetime:=as.Date(pickup_datetime)]
+train[,dropoff_datetime:=as.Date(dropoff_datetime)]
+
+train[,":="(
+   pickup_yday=yday(pickup_datetime)
+  ,pickup_mday=mday(pickup_datetime)
+)]
+```
+
+## Feature Visualisation
+
+- Target 변수(trip_duration) 분석 : 짧은 거리의 빈도가 높음
+
+```{r, echo=TRUE}
+train %>% 
+  ggplot(aes(x=trip_duration)) + 
+  geom_histogram(bins=40000, fill="red")+
+  theme_bw()+theme(axis.title = element_text(size=12),axis.text = element_text(size=12))+
+  ylab("Density")+coord_cartesian(x=c(0,6000))
+```
+
+
+- passenger_count : single ride가 대부분
+
+```{r, echo=TRUE}
+plot1 = train %>% 
+  group_by(passenger_count) %>% 
+  count() %>% 
+  ggplot(aes(x=passenger_count,y=n, fill=passenger_count))+
+  geom_col()+
+  theme(legend.position = "none")
+```
+
+
+- Weekdays : 요일간의 차이 없음
+```{r, echo=TRUE}
+plot1 <-train[, list(mean_trip_duration = mean(trip_duration)), by = pickup_weekdays] %>%
+  ggplot(aes(x = pickup_weekdays, y = mean_trip_duration)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Month', y = 'Mean Trip Duration', title = 'Mean Trip duration by weekdays')
+
+grid.arrange(plot1)
+```
+
+
+- Hours : 밤, 새벽 시간대에 특징 있음
+```{r, echo=TRUE}
+plot1 <-train[, list(mean_trip_duration = mean(trip_duration)), by = pickup_hour] %>%
+  ggplot(aes(x = as.factor(pickup_hour), y = mean_trip_duration)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Hours', y = 'Mean Trip Duration', title = 'Mean Trip duration by hour of the day')
+
+plot2 = train[,.N, by=pickup_hour] %>%
+  ggplot(aes(x=pickup_hour, y=N)) + 
+  geom_bar(stat='identity', fill='steelblue') + 
+  labs(x='', y='Number of Rides', title='Total Rides Per Hour')
+
+grid.arrange(plot1, plot2, ncol =2)
+```
+
+Shift 시간(AM 4~5)에는 평균 주행거리와 승차횟수 모두 감소
+
+## Feature Engineering
+
+- pickup 장소와 dropoff 장소간의 거리 (km단위)
+ -> *geosphere* 패키지의 *distHaversine* 함수 사용 
+
+```{r, echo=TRUE}
+train <- train[,distance_km := 
+                     distHaversine(matrix(c(pickup_longitude, pickup_latitude), ncol = 2),
+                     matrix(c(dropoff_longitude,dropoff_latitude), ncol = 2))/1000
+              ]
+train %>% 
+  ggplot(aes(x=distance_km)) + 
+  geom_histogram(bins=4000, fill="red")+
+  theme_bw()+theme(axis.title = element_text(size=11),axis.text = element_text(size=8))+
+  ylab("Density")+coord_cartesian(x=c(0,25))
+```
+
+대부분 짧은 거리 주행
+
+- 주행 속도
+```{r, echo=TRUE}
+train[,speed:=(distance_km)/(trip_duration/3600)]
+
+train %>% 
+  ggplot(aes(x=speed)) + 
+  geom_histogram(bins=4000, fill="red")+
+  theme_bw()+theme(axis.title = element_text(size=11),axis.text = element_text(size=8))+
+  ylab("Density")+coord_cartesian(x=c(0,50))
+```
+
+평균 12km/h 정도의 속도로 주행
+
+```{r, echo=TRUE}
+summary(train$speed)
+```
+
+Max값이 9285km/h로 나왔는데 추후 이상치 분석 필요
+
+- 하루 동안의 speed 분포 
+```{r, echo=TRUE}
+train %>% 
+  group_by(pickup_hour) %>% 
+  summarize(mean_speed = mean(speed),n()) %>% 
+  ggplot(aes(x=pickup_hour,y=mean_speed))+
+  geom_smooth(method = 'loess',color="grey10")+
+  geom_point(color="red")+coord_cartesian(ylim=c(10,25))+theme_bw()
+```
+
+낮 시간에는 혼잡한 교통으로 speed가 낮아지는 것을 확인
+
+## Feature Interaction
+
+- Correlation Plot
+```{r, echo=TRUE}
+corr_features = train[,.(pickup_hour, pickup_week, pickup_month,pickup_yday, pickup_mday,passenger_count,trip_duration,distance_km)] 
+corrplot(cor(corr_features, use='complete.obs'), type='lower')
+```
+
+trip_duration과 상관이 있는 변수가 하나도 없음
+그나마 Feature engineering 단계에서 만든 distance_km와 약간의 상관관계 있는 것 확인
+
+- 시간에 따른 trip_duration과 mean_distance*km*의 분포
+```{r, echo=TRUE}
+plot1 = train %>% 
+  group_by(pickup_hour) %>% 
+  summarize(mean_trip_duration = mean(trip_duration),n()) %>% 
+  ggplot(aes(x=pickup_hour,y=mean_trip_duration))+
+  geom_smooth(method = 'loess',color="grey10")+
+  geom_point(color="red")+coord_cartesian(ylim=c(500,1500))+theme_bw()
+
+plot2 = train %>% 
+  group_by(pickup_hour) %>% 
+  summarize(mean_distance = mean(distance_km),n()) %>% 
+  ggplot(aes(x=pickup_hour,y=mean_distance))+
+  geom_smooth(method = 'loess',color="grey10")+
+  geom_point(color="red")+coord_cartesian(ylim=c(0,10))+theme_bw()
+
+grid.arrange(plot1, plot2, ncol =2)
+```
+
+## External Data
+
+- Fastest Routes
+[oscarleo](https://www.kaggle.com/oscarleo)에서 Open source Routing Machine([OSRM](http://project-osrm.org/))을 사용한 데이터셋 사용
+
+[데이터셋](https://www.kaggle.com/oscarleo/new-york-city-taxi-with-osrm)이 가지고 있는 정보
+
+1. pickup장소와 dropoff장소간의 가장 빠른 루트와 시간
+2. 가장 빠른 루트로 갈 때 거치는 street의 갯수
+3. 고속도로 진입과 같은 maneuvers의 수
+4. 좌회전, 우회전과 같은 방향 정보
+
+- 데이터 로드 (기존 train set과 merge)
+```{r, echo=TRUE}
+fastest_route_train =
+read_csv("C:/Users/gskim/Desktop/워킹캐글/new-york-city-taxi-with-osrm/fastest_routes_train_part_1.csv")
+
+dtrain = merge(train, fastest_route_train, by="id")
+#dtrain = as.data.table(dtrain)
+```
+
+- Street의 갯수
+```{r, echo=TRUE}
+dtrain[,number_of_streets := number_of_steps - 1]
+plot1 <- 
+  dtrain[, list(mean_trip_duration = mean(total_travel_time)), by = number_of_streets] %>%
+  ggplot(aes(x = as.factor(number_of_streets), y = mean_trip_duration)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Number of Streets', y = 'Mean Trip Duration', title = 'Mean Trip duration by Number of Streets')
+
+plot2 <- dtrain[, list(Number_of_Rides = .N), by = number_of_streets] %>%
+  ggplot(aes(x = as.factor(number_of_streets), y = Number_of_Rides)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Number of Streets', y = 'Number of Trips', title = 'Number of Rides by Number of Streets')
+
+plot3 <- dtrain[, list(mean_distance = mean(total_distance)/1000), by = number_of_streets] %>%
+  ggplot(aes(x = as.factor(number_of_streets), y = mean_distance)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Number of Streets', y = 'Mean Trip Distnace(km)', title = 'Mean Trip Distance by Number of Streets')
+
+grid.arrange(plot1,plot2, plot3)
+```
+
+Street의 수가 증가할수록 평균 주행거리는 길어지고, 승차 횟수는 감소
+
+- Step Maneauvers
+```{r, echo=TRUE}
+dtrain[, ':='(new_name = str_count(step_maneuvers,"new name"),
+            depart = str_count(step_maneuvers,"depart"),
+            arrive = str_count(step_maneuvers,"arrive"),
+            merge = str_count(step_maneuvers,"merge"),
+            on_ramp = str_count(step_maneuvers,"on ramp"),
+            off_ramp = str_count(step_maneuvers,"off ramp"),
+            fork = str_count(step_maneuvers,"fork"),
+            end_of_road = str_count(step_maneuvers,"end of road"),
+            continue = str_count(step_maneuvers,"continue"),
+            roundabout = str_count(step_maneuvers,"roundabout"),
+            rotary = str_count(step_maneuvers,"rotary"),
+            roundabout_turn = str_count(step_maneuvers,"roundabout turn")          
+    )]
+
+dtrain[, ':=' (nb_step_maneuvers = new_name + depart + arrive + merge + on_ramp + off_ramp + fork
+             + end_of_road + continue + roundabout + rotary + roundabout_turn)]
+
+
+dtrain[,nb_step_maneuvers:= ifelse(nb_step_maneuvers>= 20, 20, nb_step_maneuvers)]
+
+plot1 <- 
+  dtrain[, list(mean_trip_duration = mean(total_travel_time)), by = nb_step_maneuvers] %>%
+  ggplot(aes(x = as.factor(nb_step_maneuvers), y = mean_trip_duration)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Total Number of Maneauvers', y = 'Mean Trip Duration')
+
+plot2 <- dtrain[, list(Number_of_Rides = .N), by = nb_step_maneuvers] %>%
+  ggplot(aes(x = as.factor(nb_step_maneuvers), y = Number_of_Rides)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Total Number of Maneauvers', y = 'Number of Trips')
+
+grid.arrange(plot1,plot2, ncol=2)
+```
+
+- Step Direction
+```{r, echo=TRUE}
+dtrain[, ':='(slight_left = str_count(step_direction,"slight left"),
+            slight_right = str_count(step_direction,"slight right"),
+            right = str_count(step_direction,"right"),
+            left = str_count(step_direction,"left"),
+            sharp_right = str_count(step_direction,"sharp right"),
+            sharp_left = str_count(step_direction,"sharp left"),
+            straight = str_count(step_direction,"straight"),
+            uturn = str_count(step_direction,"uturn")     
+    )]
+
+dtrain[, ':=' (nb_step_direction = slight_left + slight_right + right + left + 
+               sharp_right + sharp_left + straight + uturn)]
+
+dtrain[,nb_step_direction:= ifelse(nb_step_direction>= 40, 40, nb_step_direction)]
+
+plot1 <- 
+  dtrain[, list(mean_trip_duration = mean(total_travel_time)), by = nb_step_direction] %>%
+  ggplot(aes(x = (nb_step_direction), y = mean_trip_duration)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Number of Different Direction', y = 'Mean Trip Duration')
+
+plot2 <- dtrain[, list(Number_of_Rides = .N), by = nb_step_direction] %>%
+  ggplot(aes(x = (nb_step_direction), y = Number_of_Rides)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Number of Different Direction', y = 'Number of Trips')
+
+grid.arrange(plot1,plot2, ncol=2)
+```
+
+- 실제 주행 시간과 가장 빠른길의 주행시간 비교
+```{r, echo=TRUE}
+plot1 <- dtrain %>%
+  ggplot(aes(trip_duration)) +
+  geom_density(fill = "red", alpha = 0.5) +
+  geom_density(aes(total_travel_time), fill = "blue", alpha = 0.5) +
+  scale_x_log10() +
+  coord_cartesian(xlim = c(5e1, 8e3))
+
+dtrain[,diff:= abs(trip_duration-total_travel_time)]
+
+dtrain[,number_of_steps:= ifelse(number_of_steps>= 25, 25, number_of_steps)]
+
+plot2 =  dtrain[, list(mean_distance_km = mean(diff)), by=number_of_steps-1] %>%
+  ggplot(aes(x=number_of_steps, y=mean_distance_km)) + 
+  geom_bar(stat='identity', fill='steelblue') + 
+  labs(x='Number of Streets', y='|TripDuration - TotalTravelTime)|')
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+특징 :
+ 1. 가장 빠른길(파란색)과 실제 주행(빨간색)의 분포는 거의 비슷
+ 2. 두 번째 plot에서 street이 많아질수록 이 둘간의 차이가 커지는 것을 확인
+
+- Google Distance Matrix
+[Debanjan](https://www.kaggle.com/debanjanpaul)에서 [Google Maps API](https://developers.google.com/maps/documentation/distance-matrix/intro#traffic-model)를 활용한 [데이터셋](https://www.kaggle.com/debanjanpaul/new-york-city-taxi-trip-distance-matrix) 사용
+
+이 데이터셋에서는 과거부터 지금까지 두 지점간의 거리의 평균인 google duration이라는 중요한 정보를 얻을 수 있음
+
+- 데이터 로드
+```{r, echo=TRUE}
+suppressMessages({
+google_dist = read_csv("C:/Users/gskim/Desktop/워킹캐글/new-york-city-taxi-trip-distance-matrix/train_distance_matrix.csv")
+})
+
+google_dist = data.table(google_dist)
+google_dist[, diff := google_duration-trip_duration]
+```
+
+```{r, echo=TRUE}
+plot1 <- google_dist %>%
+  ggplot(aes(trip_duration)) +
+  geom_density(fill = "red", alpha = 0.5) +
+  geom_density(aes(google_duration), fill = "blue", alpha = 0.5) +
+  scale_x_log10() +
+  coord_cartesian(xlim = c(5e1, 8e3))
+
+
+plot2 = google_dist %>% 
+  ggplot(aes(x=diff)) + 
+  geom_histogram(bins=20000, fill="red")+
+  theme_bw()+theme(axis.title = element_text(size=12),axis.text = element_text(size=12))+
+  ylab("Density")+coord_cartesian(x=c(-2000,2000))
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+특징 :
+ 1. google duration(파란색)보다 actual duration(빨간색)의 분산이 더 큼
+ 2. 두 번째 plot에서 diff가 0보다 큰 값들이 더 많이 나타난다는 것은 'early arrival'이 'delay'보다 많다는 뜻

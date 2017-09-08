@@ -1,8 +1,8 @@
 ---
-title: "Taxi(R) 노트북"
+title: "Taxi(R) 중간발표 자료"
 output:
-  html_document: default
   html_notebook: default
+  html_document: default
 ---
 ## New York City Taxi Trip Duration
 
@@ -56,15 +56,20 @@ etc.
 
 * 면책 조항 : 커널에서 사용할 확장 된 변수 집합을 제공하기 위해 데이터 집합 순서에서 드롭 오프 좌표를 제거하지 않기로 결정했습니다.
 
+### Ref 자료
+- https://www.kaggle.com/wti200/exploratory-analysis-nyc-taxi-trip
+- https://www.kaggle.com/ambarish/tutorialstyle-edatomodel-lb-0-391
+- https://www.kaggle.com/headsortails/nyc-taxi-eda-update-the-fast-the-curious/notebook
+- https://www.kaggle.com/damianpanek/interactive-eda-nytaxi-highchar-leaflet
+- https://www.kaggle.com/retrospectprospect/nyc-taxi-trip-duration-eda-to-xgb
+- https://www.kaggle.com/hamzaashraf/simple-to-understand-eda-v2
 
-### NYC Taxi Interactive EDA
-
-- 이상열 (캐글뽀개기)
-
+## 1단계. 데이터 전처리
 
 ```{r}
 #install.packages(c('flexdashboard', 'TraMineR', 'leaflet', 'treemap', 'highcharter', 'zoo')
 
+#라이브러리 로딩
 library(data.table)
 library(dplyr)
 library(ggplot2)
@@ -78,42 +83,642 @@ library(rmarkdown)
 library(treemap)
 library(viridisLite)
 library(tidyverse)
+library(geosphere)
+library(caret)
+library(ggmap)
+library(scales)
+library(ggthemes)
+library(gridExtra)
+library(sp)
+library(lubridate)
+library(grid)
+
+rm(list=ls())
+fillColor = "#ff9999"
 ```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+train = read_csv("./data/train.csv")
+test = read_csv("./data/test.csv")
+
+sum(is.na(train))
+sum(is.na(test))
+```
+
+```{r result='asis',  warning=FALSE}
+ggplot(data=train, aes(x= trip_duration)) + 
+  geom_histogram(bins = 100) +
+  scale_x_log10(limits = c(NA,100000)) +
+  scale_y_log10() +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Trip Duration', y = 'Count', title = 'Trip Duration') 
+```
+
+```{r}
+nycData = subset(train,train$trip_duration < (60*60*24) )
+
+ggplot(nycData,aes(x=factor(passenger_count),y=trip_duration))+geom_boxplot()+scale_y_log10()
+```
+
+```{r}
+ggplot(data=nycData, aes(x= pickup_longitude)) + 
+  geom_histogram(bins = 100) +
+  scale_x_continuous(limits = c(-74,-73.85)) +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Longitude', y = 'Count', title = 'Longitude')
+```
+
+
+```{r}
+ggplot(data=nycData, aes(x= pickup_latitude)) + 
+  geom_histogram(bins = 100) +
+  scale_x_continuous(limits = c(40.6,40.85)) +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Latitude', y = 'Count', title = 'Latitude')
+
+```
+
+```{r}
+pick_coord <- nycData %>%
+  select(pickup_longitude, pickup_latitude)
+drop_coord <- nycData %>%
+  select(dropoff_longitude, dropoff_latitude)
+
+nycData$dist <- distCosine(pick_coord, drop_coord) 
+
+nycData$haversine <- distHaversine(pick_coord, drop_coord)
+
+nycData$bearing <- bearing(pick_coord, drop_coord) 
+ggplot(data=nycData, aes(x= haversine)) + 
+  geom_histogram() +
+  scale_x_log10() +
+  scale_y_log10() +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Distance', y = 'Count', title = 'Distance')
+```
+
+```{r}
+ggplot(nycData)+
+  geom_point(aes(x=haversine,y=trip_duration))+
+  scale_y_log10() +
+  scale_x_log10() +
+  theme_bw()+
+  theme(axis.title = element_text(size=16),axis.text = element_text(size=14))+
+  xlab("(Distance)")+
+  ylab("Duration")
+```
+
+## COMBINING TRAIN AND TEST
+* combine two data sets into one to preprocess 
+
+```{r}
+train <- as.tibble(train)
+test <- as.tibble(test)
+
+combine = bind_rows(train %>% mutate(dset="train"),
+                    test %>% mutate(dset="test",
+                                    dropoff_datetime=NA,
+                                    trip_duration=NA))
+
+combine <- combine %>% mutate(dset = factor(dset))
+
+train = train %>%
+  mutate(pickup_datetime = ymd_hms(pickup_datetime),
+         dropoff_datetime = ymd_hms(dropoff_datetime),
+         vendor_id = factor(vendor_id),
+         passenger_count = factor(passenger_count))
+```
+
+## INDIVISUAL FEATURE VISUALIZATION 
+각 변수의 분포를 우선 살펴본다 
+
+pickup/dropoff coordinates
+
+* manhattan only, JFK is another notable hotspot
+
+```{r}
+set.seed(1234)
+foo <- sample_n(train, 8e3)
+
+leaflet(data = foo) %>% addProviderTiles("Esri.NatGeoWorldMap") %>%
+  addCircleMarkers(~ pickup_longitude, ~pickup_latitude, radius = 1,
+                   color = "blue", fillOpacity = 0.3)
+
+leaflet(data = foo) %>% addProviderTiles("Esri.NatGeoWorldMap") %>%
+  addCircleMarkers(~ dropoff_longitude, ~dropoff_latitude, radius = 1,
+                   color = "blue", fillOpacity = 0.3)
+
+```
+
+trip_duration
+
+* log-normal with a peak of 1000 seconds (27min)
+* several short rides less than 10 sec
+
+```{r}
+train %>%
+  ggplot(aes(trip_duration)) +
+  geom_histogram(fill = "red", bins = 150) + 
+  scale_x_log10() +
+  scale_y_sqrt()
+```
+
+* homogeneous, covering between January and Jul
+* drop around late January - weather 
+
+```{r, echo=FALSE}
+# Define multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
+```{r}
+# View(train)
+p1 <- train %>%
+  ggplot(aes(pickup_datetime)) +
+  geom_histogram(fill = "red", bins = 120) +
+  labs(x = "Pickup dates")
+
+p2 <- train %>%
+  ggplot(aes(dropoff_datetime)) +
+  geom_histogram(fill = "blue", bins = 120) +
+  labs(x = "Dropoff dates")
+
+layout <- matrix(c(1,2),2,1,byrow=FALSE)
+multiplot(p1, p2, layout=layout)
+```
+
+```{r}
+p1 <- train %>%
+  group_by(passenger_count) %>%
+  count() %>%
+  ggplot(aes(passenger_count, n, fill = passenger_count)) +
+  geom_col() +
+  scale_y_sqrt() +
+  theme(legend.position = "none")
+
+p2 <- train %>%
+  ggplot(aes(vendor_id, fill = vendor_id)) +
+  geom_bar() +
+  theme(legend.position = "none")
+
+p3 <- train %>%
+  ggplot(aes(store_and_fwd_flag)) +
+  geom_bar() +
+  theme(legend.position = "none") +
+  scale_y_log10()
+
+p4 <- train %>%
+  mutate(wday = wday(pickup_datetime, label = TRUE)) %>%
+  group_by(wday, vendor_id) %>%
+  count() %>%
+  ggplot(aes(wday, n, colour = vendor_id)) +
+  geom_point(size = 4) +
+  labs(x = "Day of the week", y = "Total number of pickups") +
+  theme(legend.position = "none")
+
+p5 <- train %>%
+  mutate(hpick = hour(pickup_datetime)) %>%
+  group_by(hpick, vendor_id) %>%
+  count() %>%
+  ggplot(aes(hpick, n, color = vendor_id)) +
+  geom_point(size = 4) +
+  labs(x = "Hour of the day", y = "Total number of pickups") +
+  theme(legend.position = "none")
+
+layout <- matrix(c(1,2,3,4,5,5),3,2,byrow=TRUE)
+multiplot(p1, p2, p3, p4, p5, layout=layout)
+```
+
+```{r}
+p1 <- train %>%
+  mutate(hpick = hour(pickup_datetime),
+         Month = factor(month(pickup_datetime, label = TRUE))) %>%
+  group_by(hpick, Month) %>%
+  count() %>%
+  ggplot(aes(hpick, n, color = Month)) +
+  geom_line(size = 1.5) +
+  labs(x = "Hour of the day", y = "count")
+
+p2 <- train %>%
+  mutate(hpick = hour(pickup_datetime),
+         wday = factor(wday(pickup_datetime, label = TRUE))) %>%
+  group_by(hpick, wday) %>%
+  count() %>%
+  ggplot(aes(hpick, n, color = wday)) +
+  geom_line(size = 1.5) +
+  labs(x = "Hour of the day", y = "count")
+
+layout <- matrix(c(1,2),2,1,byrow=FALSE)
+multiplot(p1, p2, layout=layout)
+```
+
+* 1 월과 6 월은 여행 횟수가 적지만 3 월과 4 월은 바쁜 달입니다.
+* 주말 (토요일과 일요일, 플러스에서 연장까지) 이른 아침에는 더 높은 여행 숫자를 갖지만 오전에는 5시에서 10 시까 지 낮습니다
+
+## FEATURE RELATIONS 
+Pickup date/time vs trip_duration
+```{r}
+p1 <- train %>%
+  mutate(wday = wday(pickup_datetime, label = TRUE)) %>%
+  group_by(wday, vendor_id) %>%
+  summarise(median_duration = median(trip_duration)/60) %>%
+  ggplot(aes(wday, median_duration, color = vendor_id)) +
+  geom_point(size = 4) +
+  labs(x = "Day of the week", y = "Median trip duration [min]")
+
+p2 <- train %>%
+  mutate(hpick = hour(pickup_datetime)) %>%
+  group_by(hpick, vendor_id) %>%
+  summarise(median_duration = median(trip_duration)/60) %>%
+  ggplot(aes(hpick, median_duration, color = vendor_id)) +
+  geom_smooth(method = "loess", span = 1/2) +
+  geom_point(size = 4) +
+  labs(x = "Hour of the day", y = "Median trip duration [min]") +
+  theme(legend.position = "none")
+
+layout <- matrix(c(1,2),2,1,byrow=FALSE)
+multiplot(p1, p2, layout=layout)
+```
+
+
+* 더 자주 여행하는 벤더 2는 지속적으로 더 높은 여행 기간을 가집니다.
+* 이른 오후의 최고점과 5-6am와 8pm 주위에 dips.
+
+## Passenger count and Vendor vs trip_duration
+
+```{r}
+train %>%
+  ggplot(aes(trip_duration, fill = vendor_id)) +
+  geom_density(position = "stack") +
+  scale_x_log10()
+
+train %>%
+  group_by(vendor_id) %>%
+  summarise(mean_duration = mean(trip_duration),
+            median_duration = median(trip_duration))
+```
+
+* 중앙값은 매우 유사하지만, 평균값이 긴 기간의 대부분을 포함하는 벤더 2에 의해 평균값이 비뚤어 질 가능성이 있습니다
+
+## Feature Engineering
+- 픽업 및 드롭 오프 위치 사이의 거리 (킬로미터)
+- 픽업 포인트와 드롭 오프 포인트의 좌표로부터 두 점 사이의 거리를 계산할 수 있습니다. 
+
+- 이 거리를 계산하기 위해 우리는 지구권 패키지의 distHaversine 함수를 사용하고 있습니다. 이 방법은 구형 지구의 두 점 사이의 최단 거리를 제공합니다.
+
+```{r}
+train = as.data.table(train)
+
+train <- train[,distance_km := 
+                     distHaversine(matrix(c(pickup_longitude, pickup_latitude), ncol = 2),
+                     matrix(c(dropoff_longitude,dropoff_latitude), ncol = 2))/1000
+              ]
+train %>% 
+  ggplot(aes(x=distance_km)) + 
+  geom_histogram(bins=4000, fill="red")+
+  theme_bw()+theme(axis.title = element_text(size=11),axis.text = element_text(size=8))+
+  ylab("Density")+coord_cartesian(x=c(0,25))
+```
+
+- 테스트 속도는 테스트 데이터 세트에서 사용할 수 없습니다. 그러나 그것은 어떤 종류의 패턴이 트래픽에 있는지를 보는 것을 도울 수 있습니다.
+
+```{r}
+train[,speed:=(distance_km)/(trip_duration/3600)]
+
+train %>% 
+  ggplot(aes(x=speed)) + 
+  geom_histogram(bins=4000, fill="red")+
+  theme_bw()+theme(axis.title = element_text(size=11),axis.text = element_text(size=8))+
+  ylab("Density")+coord_cartesian(x=c(0,50))
+```
+
+```{r}
+summary(train$speed)
+```
+
+- 9285km / h 속도의 특정 rides가 있습니다. 우리는 이상 치 분석 (Outlier Analysis) 부분에서 이를 조사 할 것입니다. 그러나 평균 속도는 15km / h입니다. 
+
+```{r, echo=TRUE}
+train$pickup_hour <- hour(train$pickup_datetime)
+train$pickup_week <- week(train$pickup_datetime)
+train$pickup_month <- month(train$pickup_datetime)
+train$pickup_weekdays <- weekdays(train$pickup_datetime)
+train$pickup_weekend <- ifelse(train$pickup_weekdays==1 | train$pickup_weekdays==7,"Weekend","not-Weekend")
+
+train[,pickup_datetime:=as.Date(pickup_datetime)]
+train[,dropoff_datetime:=as.Date(dropoff_datetime)]
+
+train[,":="(
+   pickup_yday=yday(pickup_datetime)
+  ,pickup_mday=mday(pickup_datetime)
+)]
+
+train %>% 
+  group_by(pickup_hour) %>% 
+  summarize(mean_speed = mean(speed),n()) %>% 
+  ggplot(aes(x=pickup_hour,y=mean_speed))+
+  geom_smooth(method = 'loess',color="grey10")+
+  geom_point(color="red")+coord_cartesian(ylim=c(10,25))+theme_bw()
+```
+
+- 하루 평균 속도가 상당히 낮습니다. 분명히 트래픽이 많기 때문입니다.
+
+## Feature Visualisation
+
+```{r}
+library(corrplot)
+corr_features = train[,.(pickup_hour, pickup_week, pickup_month,pickup_yday, pickup_mday,passenger_count,trip_duration,distance_km)]
+
+corrplot(cor(corr_features, use='complete.obs'), type='lower')
+```
+
+- 변수의 어느 것도 trip_duration과 상관 관계가 없기 때문에 이것은 매우 불안정한 구성입니다. 
+
+- 거리가 상관 관계가있는 유일한 거리이지만 테스트 세트에는 해당 기능이 없습니다. 기능의 일부가 대상 변수와 상호 연관 될 수도 있지만 조사해야합니다. 
+
+- 피쳐와 타겟 변수간에 상관 관계가 없다는 것은 트립 시간을 예측하기 위해 외부 피쳐를 찾아야한다는 것을 의미합니다.
+
+```{r}
+plot1 <-train[, list(mean_trip_duration = mean(trip_duration)), by = pickup_weekdays] %>%
+  ggplot(aes(x = pickup_weekdays, y = mean_trip_duration)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Month', y = 'Mean Trip Duration', title = 'Mean Trip duration by weekdays')
+
+grid.arrange(plot1)
+```
+
+```{r}
+plot1 <-train[, list(mean_trip_duration = mean(trip_duration)), by = pickup_hour] %>%
+  ggplot(aes(x = as.factor(pickup_hour), y = mean_trip_duration)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Hours', y = 'Mean Trip Duration', title = 'Mean Trip duration by hour of the day')
+
+plot2 = train[,.N, by=pickup_hour] %>%
+  ggplot(aes(x=pickup_hour, y=N)) + 
+  geom_bar(stat='identity', fill='steelblue') + 
+  labs(x='', y='Number of Rides', title='Total Rides Per Hour')
+
+grid.arrange(plot1, plot2, ncol =2)
+```
+
+## External Data
+- Fastest Routes
+[oscarleo](https://www.kaggle.com/oscarleo) Open source Routing Machine([OSRM](http://project-osrm.org/))
+
+- Open Source Routing Machine, OSRM을 사용하여 oscarleo가 유용한 데이터 세트를 제공합니다. 
+
+- 픽업에서 드롭 오프 위치까지의 가장 빠른 경로와 해당 시간.
+가장 빠른 노선을위한 거리의 수.
+
+- 예를 들어 고속도로 진입과 같은 여행 당 기동 수.
+- 예를 들어 좌회전이나 우회전과 같은 여행 당 길 찾기.
+
+```{r}
+suppressMessages({
+fastest_route_train = read_csv("./data/new-york-city-taxi-with-osrm/fastest_routes_train_part_1.csv")
+})
+dtrain = merge(train, fastest_route_train, by="id")
+
+dtrain[,number_of_streets := number_of_steps - 1]
+plot1 <- 
+  dtrain[, list(mean_trip_duration = mean(total_travel_time)), by = number_of_streets] %>%
+  ggplot(aes(x = as.factor(number_of_streets), y = mean_trip_duration)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Number of Streets', y = 'Mean Trip Duration', title = 'Mean Trip duration by Number of Streets')
+
+plot2 <- dtrain[, list(Number_of_Rides = .N), by = number_of_streets] %>%
+  ggplot(aes(x = as.factor(number_of_streets), y = Number_of_Rides)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Number of Streets', y = 'Number of Trips', title = 'Number of Rides by Number of Streets')
+
+plot3 <- dtrain[, list(mean_distance = mean(total_distance)/1000), by = number_of_streets] %>%
+  ggplot(aes(x = as.factor(number_of_streets), y = mean_distance)) +
+  geom_bar(stat = 'identity', fill = 'steelblue') +
+  labs(x = 'Number of Streets', y = 'Mean Trip Distnace(km)', title = 'Mean Trip Distance by Number of Streets')
+
+grid.arrange(plot1,plot2, plot3)
+```
+
+- 몇 가지 더 확인하고 싶습니다. 예를 들어 실제 여행 시간과 가장 빠른 경로 사이의 시간 차이가 얼마나 큰지를 예로 들 수 있습니다.
+
+```{r}
+plot1 <- dtrain %>%
+  ggplot(aes(trip_duration)) +
+  geom_density(fill = "red", alpha = 0.5) +
+  geom_density(aes(total_travel_time), fill = "blue", alpha = 0.5) +
+  scale_x_log10() +
+  coord_cartesian(xlim = c(5e1, 8e3))
+
+dtrain[,diff:= abs(trip_duration-total_travel_time)]
+
+dtrain[,number_of_steps:= ifelse(number_of_steps>= 25, 25, number_of_steps)]
+
+plot2 =  dtrain[, list(mean_distance_km = mean(diff)), by=number_of_steps-1] %>%
+  ggplot(aes(x=number_of_steps, y=mean_distance_km)) + 
+  geom_bar(stat='identity', fill='steelblue') + 
+  labs(x='Number of Streets', y='|TripDuration - TotalTravelTime)|')
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+
+- 파란색 그림은 가장 빠른 경로 밀도 그림입니다. 실제 여행 시간과 비슷하지만 교대로 보입니다.
+
+- 두 번째 플롯에서 우리는 실제 이동량과 가장 빠른 경로 시간 간의 절대적인 차이가 거리의 수가 증가함에 따라 증가한다는 것을 관찰합니다. 
+
+- 오늘날의 가장 빠른 경로가 과거의 실제 경로와 다른 확률이 단계 증가의 수로 증가하기 때문에 논리적입니다.
+
+- 가장 빠른 경로 데이터를 사용하여 실제 경로에 대해 의미있는 것을 말하는 방법을 이해하는 것은 정말 어렵습니다. 오늘 가장 빠른 길은 내일 또는 과거의 가장 빠른 길이 아니기 때문에. 
+
+- 따라서 훈련 세트의 경로는 OSRM에서 제안한 경로와 다릅니다. 내가 가장 다른 점은 가장 빠른 경로와 관련된 기능이 훈련 세트의 rides에 대해별로 말하지 않는다는 것입니다.
+
+## Google Distance Matrix
+
+- 이 데이터 세트는 Debanjan이 Google Maps API를 사용하여 제공합니다. 
+
+- 적어도 이 대회의 모든 라이딩에 사용할 수있는 데이터가 있다면 많은 것을 약속합니다. 
+
+- 데이터는 훈련 세트의 하위 집합에 대해서만 제공되므로 나머지 데이터는 잠깐 기다리고 있습니다. 이 데이터 세트의 중요한 정보는 Google 기간이라는 두 위치 간의 과거 평균 지속 시간입니다. 
+
+- 나는 Google 기간과 실제 기간의 차이로 새로운 기능을 만들어 낼 것입니다. 차이가 '지연'보다 '0'보다 작으면 '초기 도착'이 있습니다.
+
+```{r}
+suppressMessages({
+google_dist = read_csv("./data/new-york-city-taxi-with-osrm/train_distance_matrix.csv")
+})
+
+google_dist = data.table(google_dist)
+google_dist[, diff := google_duration-trip_duration]
+
+plot1 <- google_dist %>%
+  ggplot(aes(trip_duration)) +
+  geom_density(fill = "red", alpha = 0.5) +
+  geom_density(aes(google_duration), fill = "blue", alpha = 0.5) +
+  scale_x_log10() +
+  coord_cartesian(xlim = c(5e1, 8e3))
+
+
+plot2 = google_dist %>% 
+  ggplot(aes(x=diff)) + 
+  geom_histogram(bins=20000, fill="red")+
+  theme_bw()+theme(axis.title = element_text(size=12),axis.text = element_text(size=12))+
+  ylab("Density")+coord_cartesian(x=c(-2000,2000))
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+- 파란색 줄거리는 Google 기간이며 빨간색은 실제 지속 시간입니다. 
+
+- Google 기간이 더 비뚤어졌습니다. 실제 지속 시간은 더 높은 분산 (더 부풀어 오른)과 더 두꺼운 꼬리를가집니다.
+
+- 두 번째 플롯은 Google 기간과 실제 기간 간의 시간 차이에 대한 막대 그래프입니다. 
+
+- 왼쪽보다 0의 오른쪽에 더 많은 관측이 있다는 것을 관찰 할 수 있습니다. 즉, '지연'보다 '조기 도착'이 더 많은 'rides'가 있습니다. 
+
+## Weather Data
+
+```{r}
+weather = fread("./data/new-york-city-taxi-with-osrm/weather_data_nyc_centralpark_2016.csv")
+weather <- weather %>%
+  mutate(date = dmy(date),
+         rain = as.numeric(ifelse(precipitation == "T", "0.01", precipitation)),
+         s_fall = as.numeric(ifelse(`snow fall` == "T", "0.01", `snow fall`)),
+         s_depth = as.numeric(ifelse(`snow depth` == "T", "0.01", `snow depth`)),
+         all_precip = s_fall + rain,
+         has_snow = (s_fall > 0) | (s_depth > 0),
+         has_rain = rain > 0,
+         max_temp = `maximum temerature`,
+         min_temp = `minimum temperature`)
+
+
+weather = as.data.table(weather)
+weather[, c("precipitation", "snow fall", "snow depth", "maximum temerature", "minimum temperature") := NULL]
+
+setkey(dtrain, dropoff_datetime)
+setkey(weather, date)
+
+dtrain = weather[dtrain]
+```
+
+- 날씨가 두 가지 방법으로 여행 시간에 영향을 미친다고 생각할 것입니다.
+
+- 눈 : 특정 양의 눈이 내린 후에 만 역할을해야합니다.
+- 비 : 눈이 일정량의 강수량 후에 만 역할을해야합니다.
+
+```{r}
+plot1 = dtrain %>%
+  group_by(pickup_hour, has_snow) %>%
+  summarise(duration = mean(trip_duration)) %>%
+  ggplot(aes(pickup_hour,duration, color = has_snow)) +
+  geom_jitter(width = 0.01, size = 2) +
+  labs(x = "hour", y = "trip duration")
+
+plot2 = dtrain %>% 
+  group_by(pickup_hour, has_snow) %>%
+  summarise(distance = mean(distance_km)) %>%
+  ggplot(aes(pickup_hour,distance, color = has_snow)) +
+  geom_jitter(width = 0.01, size = 2) +
+  labs(x = "hour", y = "Distance Covered")
+
+grid.arrange(plot1, plot2,ncol=1)
+```
+
+- 첫 번째 줄거리에서 눈이 내릴 때 아침 10시에서 저녁 20시 사이에 눈이 내리지 않는 날에 비해 평균 여행 소요 시간이 짧다는 결론을 얻을 수 있습니다. 
+
+- 일반적으로 걷거나 자전거를 타는 사람들에게 눈이 내릴 때 목적지에 도달하기 위해 택시를 타기 때문에 아주 이상하지 않습니다.
+
+```{r}
+plot1 = dtrain %>%
+  group_by(pickup_hour, has_rain) %>%
+  summarise(duration = mean(trip_duration)) %>%
+  ggplot(aes(pickup_hour,duration, color = has_rain)) +
+  geom_jitter(width = 0.01, size = 2) +
+  labs(x = "hour", y = "trip duration")
+
+plot2 = dtrain %>% 
+  group_by(pickup_hour, has_rain) %>%
+  summarise(distance = mean(distance_km)) %>%
+  ggplot(aes(pickup_hour,distance, color = has_rain)) +
+  geom_jitter(width = 0.01, size = 2) +
+  labs(x = "hour", y = "Distance Covered")
+
+grid.arrange(plot1, plot2,ncol=1)
+```
+
+- 비가 내리는 날과 평균 여행 기간이 아닌 날 사이에는 별 차이가 없습니다.
+
+- 그러나 나는 비오는 날에 덮힌 거리가 비오는 날과 비교하여 적다는 것을 알 수 있습니다. 일반적으로 짧은 거리를 걷거나 자전거를 타는 사람들이 목적지로 택시를 타는 것을 선호하기 때문에 이것은 논리적입니다.
 
 - 2016 년 NYC의 날씨와 함께 데이터 세트를 사용하기로 결정 했으므로 이 데이터 세트를 합치려면 몇 가지 데이터가 필요합니다.
 
-### [METAR](https://en.wikipedia.org/wiki/METAR)
+## [METAR](https://en.wikipedia.org/wiki/METAR)
+
 - METAR는 날씨 정보를 보고 하는 형식입니다. 
 - METAR 기상 예보는 비행 전 날씨 브리핑의 일부를 수행하는 조종사와 기상 예측에 도움이되는 집계 된 METAR 정보를 사용하는 기상 학자에 의해 주로 사용됩니다.
 
-- 이것은 KNYC에서 2016에 대한 METARs 집계 정보입니다.
-
 ```{r}
-train_dataset <- fread("./data/train.csv")
-
-train_dataset[, pi_dt_shift :=  paste(substr(pickup_datetime, 1, 13), ":00:00", sep = "")]
-train_dataset[, df_dt_shift := paste(substr(dropoff_datetime, 1, 13), ":00:00", sep = "")]
+train <-  fread("./data/train.csv")
 
 weather_nyc <-  fread("./data/KNYC_Metars.csv")
 
-head(train_dataset, 5)
-head(weather_nyc, 5)
-```
+train[, pi_dt_shift :=  paste(substr(pickup_datetime, 1, 13), ":00:00", sep = "")]
+train[, df_dt_shift := paste(substr(dropoff_datetime, 1, 13), ":00:00", sep = "")]
 
-```{r}
-weather_condition_freq <- 
-  weather_nyc %>%                        group_by(Conditions) %>%
-  select(Conditions) %>%
-  summarize(count = n()) %>%
-  arrange(desc(count))
-
-datatable(weather_condition_freq)
-```
-
-- 다음 단계는 2 개의 데이터 세트를 결합하고 몇 가지 요약 통계를 보여주는 것입니다.
-
-```{r}
-train_joined <- dplyr::left_join(train_dataset, weather_nyc, by  = c("pi_dt_shift" = "Time"))
+train_joined <- dplyr::left_join(train, weather_nyc, by  = c("pi_dt_shift" = "Time"))
 
 train_joined$Conditions[is.na(train_joined$Conditions) ==  TRUE] <- "Unknown"
 
@@ -129,29 +734,11 @@ weather_condition_freq <- train_joined %>%
 datatable(weather_condition_freq)
 ```
 
-- 아래의 그림은 사용자가 픽업 택시를 다른 기상 조건에 얼마나 자주 의존하는지 보여줍니다. ^^
+- 아래의 그림은 사용자가 픽업 택시를 다른 기상 조건에 얼마나 자주 의존하는지 보여줍니다.
 
 - NA가 있는 조건 값을 '알수 없는 카테고리'로 변경하기로 결정했습니다.
 
 - 가장 빈번한 그룹은 'Clear' 조건을 가진 그룹이라는 것이 분명합니다.
-
-```{r}
-highchart() %>%
-hc_add_series(weather_condition_freq, "column", hcaes(x =  Conditions, y = count), name = "Count by Conditions Weather") %>%
-  hc_plotOptions(series = list(
-    showInLegend = FALSE, 
-    pointFormat = "{point.y}%"
-  ), 
-  column = list(colorByPoint = TRUE)) %>%
-  hc_subtitle(text = "Count by Conditions Caegories") %>%
-  hc_credits(
-    enabled = TRUE, 
-    text = "Source: Kaggle", 
-    href = "https://kaggle.com/damianpanek", 
-    style = list(fontSize = "12px")
-  ) %>%
-  hc_add_theme(hc_theme_google())
-```
 
 ```{r}
 highchart()%>%
@@ -190,7 +777,7 @@ train_joined[, dropoff_month := format(dropoff_datetime, "%Y-%m")]
 train_joined[, weekday := weekdays(pickup_datetime)]
 ```
 
-- Summary Statistics for Tempertarure in NYC   taxi dataset
+- Summary Statistics for Tempertarure in NYC taxi dataset
 
 ```{r}
 weather_temp_day <-  train_joined %>% 
@@ -201,11 +788,6 @@ weather_temp_day <-  train_joined %>%
             max = max(Temp., na.rm = TRUE), 
             sd_dur = sd(Temp., na.rm = TRUE))
 
-
-datatable(weather_temp_day)
-```
-
-```{r}
 hchart(weather_temp_day, 
         type = "columnrange", 
         hcaes(x = pickup_day, low = min, high = max, color = sd_dur)) %>%
@@ -219,233 +801,7 @@ hchart(weather_temp_day,
 hc_title(text = "Min/Max temperature daily, coloured by SD(Temp)")
 ```
 
-- Similar plot - Summary statistics for Trip Duration variable
-
-```{r}
-weather_dur_day <-  train_joined %>% 
-  group_by(pickup_day) %>%
-  select(pickup_day, trip_duration, Conditions) %>%
-  summarize(count = n(), 
-            median = median(trip_duration, na.rm = TRUE), 
-            mean = mean(trip_duration, na.rm = TRUE), 
-            sd_dur = sd(trip_duration, na.rm = TRUE))
-
-
-datatable(weather_dur_day)
-```
-
-```{r}
-hchart(weather_dur_day, 
-       type = "columnrange", 
-       hcaes(x = pickup_day, low = mean, high = median, color = median)) %>%
-  hc_chart(polar = TRUE) %>%
-  hc_yAxis( max = 1300, labels = list(format = "{value} "), 
-           showFirstLabel = FALSE) %>%
-  hc_xAxis(
-    title = list(text = ""), gridLineWidth = 0.5,
-    labels = list(format = "{value: %b}")) %>%
-  hc_add_theme(hc_theme_google()) %>% 
-  hc_title(text = "Trip duration Statistics per day")
-```
-
-- Piechart for fwd/store flag
-
-```{r}
-store_and_fwd_freq <- train_dataset %>% 
-  select(store_and_fwd_flag) %>%
-  group_by(store_and_fwd_flag) %>%
-  summarize(count = n()) %>%
-  mutate(freq = count/sum(count))
-
-datatable(store_and_fwd_freq)
-```
-
-```{r}
-hc <-  highchart() %>%
-      hc_add_series(store_and_fwd_freq, "pie", hcaes(x =  store_and_fwd_flag, y = count), name = "Column Plot") %>%
-  hc_plotOptions(series = list(
-    showInLegend = FALSE, 
-    pointFormat = "{point.y}%"
-  ), 
-  column = list(colorByPoint = TRUE)) %>%
-  hc_subtitle(text = "Frequency of Store And FWD FLAG") %>%
-  hc_credits(
-    enabled = TRUE, 
-    text = "Source: Kaggle", 
-    href = "https://kaggle.com/damianpanek", 
-    style = list(fontSize = "12px")
-  ) %>%
-  hc_add_theme(hc_theme_google())
-```
-
-- Frequency plot - day by day 
-
-```{r}
-freq_by_day <- train_joined %>%
-              select(pickup_day) %>%
-              group_by(pickup_day) %>%
-              summarize(count = n())
-
-datatable(freq_by_day)
-```
-
-```{r}
-freq_day <- highchart() %>%
-            hc_add_series(freq_by_day, "column", 
-                          hcaes(x = pickup_day, y = count),name = "Column")  %>%
-                          hc_add_theme(hc_theme_google()) %>%
-                          hc_plotOptions(
-                            series = list(
-                              showInLegend = FALSE, 
-                              pointFormat = "{point.y}%"
-                            ), 
-                            column = list(
-                              colorByPoint = TRUE
-                            )
-                          ) %>% 
-  hc_yAxis(title = list("pickup per Day"), 
-           labels = list(format = "{value}"))   %>%
-  hc_xAxis(unique(as.character(freq_by_day$pickup_day))) %>%
-  hc_title(
-    text = "Graph represents amount of pickups per day"
-  ) %>%
-  hc_subtitle(text = "In sweet rainbow dash taste XD") %>%
-  hc_credits(
-    enabled = TRUE, text = "Damiano ;p/click",
-    href = "https://www.kaggle.com/damianpanek"
-  ) %>%
-  hc_add_theme(hc_theme_google())
-
-freq_day
-```
-
-- Similar plot but observation divided by month
-
-```{r}
-freq_by_month <- train_joined %>%
-  select(pickup_month) %>%
-  group_by(pickup_month) %>%
-  summarize(count = n())
-
-datatable(freq_by_month)
-```
-
-```{r}
-freq_month <- highchart() %>%
-  hc_add_series(freq_by_month, "column", 
-                hcaes(x = pickup_month, y = count),name = "Column")  %>%
-  hc_add_theme(hc_theme_google()) %>%
-  hc_plotOptions(
-    series = list(
-      showInLegend = FALSE, 
-      pointFormat = "{point.y}%"
-    ), 
-    column = list(
-      colorByPoint = TRUE
-    )
-  ) %>% 
-  hc_yAxis(title = list("pickup per Month"), 
-           labels = list(format = "{value}"))   %>%
-  hc_xAxis( unique(as.character(freq_by_month$pickup_month))) %>%
-  hc_title(
-    text = "Graph represents amount of pickups per day"
-  ) %>%
-  hc_subtitle(text = "UP 20170723") %>%
-  hc_credits(
-    enabled = TRUE, text = "Damiano ;p/click",
-    href = "https://www.kaggle.com/damianpanek"
-  )
-
-freq_month
-```
-
-```{r}
-freq_by_day_trip <- train_joined %>%
-  select(pickup_day, trip_duration) %>%
-  
-  group_by(pickup_day) %>%
-  summarize(count = n(), 
-            mean_trip = mean(trip_duration, na.rm = TRUE), 
-            median_trip = median(trip_duration, na.rm = TRUE), 
-            sd_trip     = sd(trip_duration, na.rm = TRUE))
-
-
-datatable(freq_by_day_trip)
-```
-
-```{r}
-hc_by_day <- highchart() %>%
-  hc_plotOptions(
-    series = list(
-      showInLegend = FALSE, 
-      pointFormat = "{point.y}%"
-    ), 
-    column = list(
-      colorByPoint = TRUE
-    )
-  ) %>% 
-  highchart() %>%
-  hc_add_series(freq_by_day_trip, "line",  hcaes(x = pickup_day, y = mean_trip),name = "Mean") %>%
-  hc_add_series(freq_by_day_trip,   "line" , hcaes(x=  pickup_day,  y= median_trip), name = "median") %>%
-  hc_add_series(freq_by_day_trip, "line", hcaes(x =  pickup_day, y = sd_trip), name = "sd") %>% 
-  hc_add_theme(hc_theme_google()) %>%
-  hc_title(text = "Summary statistics by Day of pickup :)") %>%
-  hc_plotOptions(
-    series = list(
-      showInLegend = FALSE, 
-      pointFormat = "{point.y}%"
-    ), 
-    column = list(
-      colorByPoint = TRUE
-    )
-  ) %>% 
-  hc_yAxis(title = list("Values/day"), 
-           labels = list(format = "{value}"))   %>%
-  hc_subtitle(text = "Summary statistics grouped by day") %>%
-  hc_credits(
-    enabled = TRUE, text = "Damiano ;p/click",
-    href = "https://www.kaggle.com/damianpanek"
-  )
-
-
-hc_by_day
-```
-
-```{r}
-freq_by_month_trip <- train_joined %>%
-    select(pickup_month, trip_duration) %>%
-    group_by(pickup_month)  %>%
-    summarize(count  = n(), 
-              mean_trip = mean(trip_duration, na.rm = TRUE), 
-              median_trip = median(trip_duration, na.rm = TRUE), 
-              sd_trip = sd(trip_duration, na.rm = TRUE))
-
-datatable(freq_by_month_trip)
-```
-
-```{r}
-hc_by_month <- highchart() %>%
-  hc_plotOptions(
-    series = list(
-      showInLegend = FALSE, 
-      pointFormat = "{point.y}%"
-    ), 
-    column = list(
-      colorByPoint = TRUE
-    )
-  ) %>% 
-  highchart() %>%
-  hc_add_series(freq_by_month_trip, "line",  hcaes(x = pickup_month, y = mean_trip),name = "Mean") %>%
-  hc_add_series(freq_by_month_trip,   "line" , hcaes(x=  pickup_month,  y= median_trip), name = "median") %>%
-  hc_add_series(freq_by_month_trip, "line", hcaes(x =  pickup_month, y = sd_trip), name = "sd") %>% 
-  hc_xAxis(categories = c("2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06")) %>%
-  hc_add_theme(hc_theme_google()) %>%
-  hc_title(text = "Summary statistics by Month of pickup :)")
-  
-hc_by_month                
-```
-
-### Leaflet section
+## Leaflet section
 - 먼저 순서를 만들려면 행을 끌어서 선택해야 합니다. 다음 makecluster 옵션을 사용하여 전단을 작성하기로 결정했습니다.
 
 ```{r}

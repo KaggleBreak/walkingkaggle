@@ -1,0 +1,461 @@
+---
+title: "TAXI-KAGGLE-Kernels"
+output: html_notebook
+---
+
+<생성변수>
+시간<br>
+haversine<br>
+bearing<br>
+pickup PCA1<br>
+pickup PCA2<br>
+dropoff PCA1<br>
+dropoff PCA2<br>
+요일<br>
+월<br>
+
+```{r setup, include=FALSE}
+#detach(package:plyr)
+if (!require(tidyverse)) install.packages("tidyverse") ;library(tidyverse)
+if (!require(DT)) install.packages("DT"); library(DT)
+if (!require(lubridate)) install.packages("lubridate") ;library(lubridate)
+if (!require(geosphere)) install.packages("geosphere") ;library(geosphere)
+if (!require(caret)) install.packages("caret") ;library(caret)
+if (!require(data.table)) install.packages("data.table") ;library(data.table)
+if (!require(dplyr)) install.packages("dplyr") ;library(dplyr)
+
+
+setwd("C:\\Users\\Hyangsuk_Min\\Desktop\\taxi")
+rm(list=ls())
+
+fillColor = "#ff9999"
+
+nycData = fread('train.csv')
+test = fread('test.csv')
+```
+
+# 2 Trip Duration Histogram
+-- 주행시간(초) 카운팅 <br> -- '1000초=약 17분'즈음 가장 많음
+```{r result='asis',  warning=FALSE}
+ggplot(data=nycData, aes(x= trip_duration)) + 
+  geom_histogram(bins = 100) +
+  scale_x_log10(limits = c(NA,100000)) +
+  scale_y_log10() +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Trip Duration', y = 'Count', title = 'Trip Duration') 
+```
+
+-- 24시간 이상 주행한 택시 제외하기
+```{r}
+nycData = subset(nycData,nycData$trip_duration < (60*60*24) )
+```
+
+
+# 3 Passenger Count and Trip Duration Analysis
+## (승객 인원별 주행시간 비교)
+```{r  result='asis',  warning=FALSE}
+ggplot(nycData,aes(x=factor(passenger_count),y=trip_duration))+geom_boxplot()+scale_y_log10()
+
+```
+
+-- 승객인원별 주행시간 중앙값 살펴보기<br>
+-- 승객이 1~6 일때 주행시간이 길고, 7~9 일땐 주행시간이 짧음.<br>
+
+```{r, result='asis',  warning=FALSE}
+TripDataPassenger = nycData %>% 
+  group_by(passenger_count) %>% 
+  summarise(TripDurationPassenger = median(trip_duration)) %>%
+  arrange(desc(TripDurationPassenger))
+
+TripDataPassenger = data.frame(TripDataPassenger)
+
+TripDataPassenger$passenger_count = as.factor(TripDataPassenger$passenger_count)
+```
+
+
+```{r results='asis', warning=FALSE}
+ggplot(TripDataPassenger, aes(x = reorder(passenger_count,TripDurationPassenger), 
+                       y = TripDurationPassenger)) +
+  geom_bar(stat='identity',colour="white", fill = fillColor) +
+  geom_text(aes(x = passenger_count, y = 1, 
+                label = paste0("(",TripDurationPassenger,")",sep="")),
+            hjust=0, vjust=.3, size = 4, colour = 'black',
+            fontface = 'bold') +
+  labs(x = 'Passenger Count', y = 'Trip Duration', title = 'Trip Duration and Passenger Count') +
+  coord_flip() + 
+  theme_bw()
+```
+
+# 4 Pickup Hour (승차시간별 주행시간 비교) {.tabset}
+## 4.1 Pickup Hour Flipped Barchart
+-- 18,19,21,20,22,17 주로 저녁 시간대에 탑승량이 많음.<br>
+-- 새벽시간대일 수록 탑승량이 적음.
+```{r, result='asis',  warning=FALSE}
+nycData <- nycData %>%  mutate(pickup_hour = (hour(pickup_datetime)))
+
+TripDataHour = nycData %>% 
+  group_by(pickup_hour) %>% 
+  summarise(TripCountHour = n()) %>%
+  arrange(desc(TripCountHour))
+
+TripDataHour = data.frame(TripDataHour)
+
+TripDataHour$pickup_hour = as.factor(TripDataHour$pickup_hour)
+
+ggplot(TripDataHour, aes(x = reorder(pickup_hour,TripCountHour), 
+                         y = TripCountHour)) +
+  geom_bar(stat='identity',colour="white", fill = fillColor) +
+  geom_text(aes(x = pickup_hour, y = 1, 
+                label = paste0("(",TripCountHour,")",sep="")),
+            hjust=0, vjust=.3, size = 4, colour = 'black',
+            fontface = 'bold') +
+  labs(x = 'Pickup Hour', y = 'No of Trips', title = 'Trip Count and  Pickup Hour') +
+  coord_flip() + 
+  theme_bw()
+
+```
+
+
+## 4.3 Trip Duration and  Pickup Hour Analysis
+-- 탑승시간별로 주행시간 중앙값 그래프<br>
+-- 탑승시간이 11시~15시 사이일때 주행시간이 가장 김.<br>
+-- 1~7시 사이일때 주행시간이 가장 짧음.
+```{r, result='asis',  warning=FALSE}
+TripDataHour = nycData %>% 
+  group_by(pickup_hour) %>% 
+  summarise(TripDurationHour = median(trip_duration)) %>%
+  arrange(desc(TripDurationHour))
+
+TripDataHour = data.frame(TripDataHour)
+
+TripDataHour$pickup_hour = as.factor(TripDataHour$pickup_hour)
+
+ggplot(TripDataHour, aes(x = reorder(pickup_hour,TripDurationHour), 
+                              y = TripDurationHour)) +
+  geom_bar(stat='identity',colour="white", fill = fillColor) +
+  geom_text(aes(x = pickup_hour, y = 1, 
+                label = paste0("(",TripDurationHour,")",sep="")),
+            hjust=0, vjust=.3, size = 4, colour = 'black',
+            fontface = 'bold') +
+  labs(x = 'Pickup Hour', y = 'Trip Duration', title = 'Trip Duration and  Pickup Hour') +
+  coord_flip() + 
+  theme_bw()
+
+```
+
+
+
+# 5 Latitude , Longitude{.tabset}
+-- 탑승경도는 -74~-73.95에 모여 있음.<br>
+-- 탑승위도는 40.70~40.80에 모여 있음.<br>
+-- 하차경도는 -74~-73.9에 모여 있음.<br>
+-- 하차위도는 40.7~40.8에 모여 있음.<br>
+--> 탑승과 하차의 경도/위도 집중되어 있는 곳이 비슷함.
+
+## 5.1 Pickup Longitude
+
+```{r, result='asis',  warning=FALSE}
+ggplot(data=nycData, aes(x= pickup_longitude)) + 
+  geom_histogram(bins = 100) +
+  scale_x_continuous(limits = c(-74,-73.85)) +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Longitude', y = 'Count', title = 'Longitude')
+
+```
+-- 탑승경도는 -74~-73.95에 모여 있음.
+
+## 5.2 Pickup Latitude
+
+```{r, result='asis',  warning=FALSE}
+ggplot(data=nycData, aes(x= pickup_latitude)) + 
+  geom_histogram(bins = 100) +
+  scale_x_continuous(limits = c(40.6,40.85)) +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Latitude', y = 'Count', title = 'Latitude')
+
+```
+-- 탑승위도는 40.70~40.80에 모여 있음.
+
+## 5.3 Dropoff Longitude
+
+```{r, result='asis',  warning=FALSE}
+ggplot(data=nycData, aes(x= dropoff_longitude)) + 
+  geom_histogram(bins = 100) +
+  scale_x_continuous(limits = c(-74.25,-73.75)) +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Longitude', y = 'Count', title = 'Drop Off Longitude')
+
+```
+-- 하차경도는 -74~-73.9에 모여 있음.
+
+## 5.4 Dropoff Latitude
+
+```{r, result='asis',  warning=FALSE}
+ggplot(data=nycData, aes(x= dropoff_latitude)) + 
+  geom_histogram(bins = 100) +
+  scale_x_continuous(limits = c(40.6,40.9)) +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Latitude', y = 'Count', title = 'Drop Off Latitude')
+
+```
+-- 하차위도는 40.7~40.8에 모여 있음.
+
+# 6 Distance (경도 위도로 거리 계산)
+
+We use the package **geosphere** for calculating the distance between latitude and longitude. In the package geosphere, we choose the distance as **haversine** and **bearing**.
+
+The most common distance is 1000 metres. 
+
+haversine : 경도/위도를 이용해서 "구"에서의 최단거리를 구함.
+
+https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Law-of-haversines.svg/330px-Law-of-haversines.svg.png
+http://en.m.wikipedia.org/wiki/Haversine_formula
+--식은 봐도 모르겠어서 위키피디아 링크만 가져왔습니다. ㅜㅜ
+
+bearing : 방위각 구함.
+
+```{r, result='asis',  warning=FALSE}
+pick_coord <- nycData %>%
+  select(pickup_longitude, pickup_latitude)
+drop_coord <- nycData %>%
+  select(dropoff_longitude, dropoff_latitude)
+
+nycData$dist <- distCosine(pick_coord, drop_coord) 
+
+nycData$haversine <- distHaversine(pick_coord, drop_coord) ##구 위의 최단거리를 구함.
+
+nycData$bearing <- bearing(pick_coord, drop_coord) 
+
+ggplot(data=nycData, aes(x= haversine)) + 
+  geom_histogram() +
+  scale_x_log10() +
+  scale_y_log10() +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=14)) +
+  labs(x = 'Distance', y = 'Count', title = 'Distance')
+
+```
+
+# 7 Distance and Trip Duration 
+-- 거리가 길어질수록 주행시간도 길어짐.
+```{r, result='asis',  warning=FALSE}
+ggplot(nycData)+
+  geom_point(aes(x=haversine,y=trip_duration))+
+  scale_y_log10() +
+  scale_x_log10() +
+  theme_bw()+
+  theme(axis.title = element_text(size=16),axis.text = element_text(size=14))+
+  xlab("(Distance)")+
+  ylab("Duration")
+```
+
+
+# 8 PCA Feature engineering
+-- train과 test에 있는 모든 승차 경도/위도, 하차 경도/위도를 rbind 하여 PCA 실시함.<br>
+-- pca를 이용해 새로운 경도/위도 값을 생성.
+```{r, result='asis', message = FALSE, warning=FALSE}
+nycData_pickup = nycData %>%
+                    select(pickup_latitude,pickup_longitude)
+
+names(nycData_pickup) = c("lat","lon")
+
+nycData_dropoff = nycData %>%
+  select(dropoff_latitude,dropoff_longitude)
+
+names(nycData_dropoff) = c("lat","lon")
+
+test_pickup = test %>%
+  select(pickup_latitude,pickup_longitude)
+
+names(test_pickup) = c("lat","lon")
+
+test_dropoff = test %>%
+  select(dropoff_latitude,dropoff_longitude)
+
+names(test_dropoff) = c("lat","lon")
+
+PCAData = rbind(nycData_pickup,nycData_dropoff,test_pickup,test_dropoff)
+
+pca = prcomp(PCAData, scale. = T)
+
+nycdata_pca <- predict(pca, newdata = nycData_pickup)
+nycdata_pca <- as.data.frame(nycdata_pca)
+
+nycData$pickupPCA1 = nycdata_pca$PC1
+nycData$pickupPCA2 = nycdata_pca$PC2
+
+nycdata_pca <- predict(pca, newdata = nycData_dropoff)
+nycdata_pca <- as.data.frame(nycdata_pca)
+
+nycData$dropoffPCA1 = nycdata_pca$PC1
+nycData$dropoffPCA2 = nycdata_pca$PC2
+
+nycdata_pca <- predict(pca, newdata = test_dropoff)
+nycdata_pca <- as.data.frame(nycdata_pca)
+
+test$dropoffPCA1 = nycdata_pca$PC1
+test$dropoffPCA2 = nycdata_pca$PC2
+
+
+nycdata_pca <- predict(pca, newdata = test_pickup)
+nycdata_pca <- as.data.frame(nycdata_pca)
+
+test$pickupPCA1 = nycdata_pca$PC1
+test$pickupPCA2 = nycdata_pca$PC2
+```
+
+
+# 9 Model building and Variable Importance{.tabset}
+
+```{r, result='asis', message = FALSE, warning=FALSE}
+
+nycData <- nycData %>%  mutate(pickup_dow = (wday(pickup_datetime)))
+
+nycData <- nycData %>%  mutate(pickup_dom = (mday(pickup_datetime)))
+
+nycData$log_trip_duration = log(nycData$trip_duration + 1)
+
+
+transformdata = nycData %>% 
+  select(-c(dropoff_datetime,pickup_datetime,id,dist,trip_duration))
+
+```
+-- 모델링에 사용하지 않을 데이터 제외<br>
+-- id, 승차시간, 하차시간, 주행시간, distCosine 거리 제외
+
+## Features used in Model Building
+```{r, result='asis',message = FALSE,  warning=FALSE}
+names(transformdata)
+
+features <- colnames(transformdata)
+
+for (f in features) {
+  if ((class(transformdata[[f]])=="factor") || (class(transformdata[[f]])=="character")) {
+    levels <- unique(transformdata[[f]])
+    transformdata[[f]] <- as.numeric(factor(transformdata[[f]], levels=levels))
+  }
+}
+
+```
+
+## 9.1 XGBoost Model
+-- XGBoost 모델링
+```{r, result='asis', message = FALSE,  warning=FALSE}
+formula = log_trip_duration ~ .
+
+fitControl <- trainControl(method="repeatedcv",
+                           number =5,
+                           repeats=3,
+                           verboseIter = T,
+                           returnData = F,
+                           returnResamp = "final",
+                           allowParallel = TRUE)
+
+xgbGrid <- expand.grid(nrounds = 100,
+                       max_depth = c(4),
+                       eta =c(0.05),
+                       gamma = c(0),
+                       colsample_bytree = 0.8,
+                       min_child_weight = c(1),
+                       subsample = 1)
+set.seed(13)
+
+nycDataXGB = train(formula, data = transformdata,
+                   method = "xgbTree",trControl = fitControl,
+                   tuneGrid = xgbGrid,na.action = na.pass,metric="RMSE")
+
+
+```
+
+## 9.1.1 Variable Importance
+--변수 중요도
+```{r, result='asis', message = FALSE, warning=FALSE}
+importance = varImp(nycDataXGB)
+
+varImportance <- data.frame(Variables = row.names(importance[[1]]), 
+                            Importance = round(importance[[1]]$Overall,2))
+
+# Create a rank variable based on importance
+rankImportance <- varImportance %>%
+  mutate(Rank = paste0('#',dense_rank(desc(Importance))))
+
+ggplot(rankImportance, aes(x = reorder(Variables, Importance), 
+                           y = Importance)) +
+  geom_bar(stat='identity',colour="white", fill = fillColor) +
+  geom_text(aes(x = Variables, y = 1, label = Rank),
+            hjust=0, vjust=.5, size = 4, colour = 'black',
+            fontface = 'bold') +
+  labs(x = 'Variables', title = 'Relative Variable Importance') +
+  coord_flip() + 
+  theme_bw()
+
+```
+
+# 10 Use the Model in the Test Dataset{.tabset}
+
+## 10.1 Make  features in the Test Dataset
+--test 데이터에 변수 생성하기
+```{r, result='asis', message = FALSE, warning=FALSE}
+
+test <- test %>%  mutate(pickup_hour = (hour(pickup_datetime)))
+
+test <- test %>%  mutate(pickup_month = (month(pickup_datetime)))
+
+test <- test %>%  mutate(pickup_dow = (wday(pickup_datetime)))
+
+test <- test %>%  mutate(pickup_dom = (mday(pickup_datetime)))
+
+
+pick_coord <- test %>%
+  select(pickup_longitude, pickup_latitude)
+drop_coord <- test %>%
+  select(dropoff_longitude, dropoff_latitude)
+test$haversine <- distHaversine(pick_coord, drop_coord)
+
+test$bearing <- bearing(pick_coord, drop_coord)
+
+transformTest = test %>% 
+  select(-c(pickup_datetime,id))
+
+```
+
+## 10.2 Predictions using the XGBoost Model{.tabset}
+```{r, result='asis',message = FALSE, warning=FALSE}
+features <- colnames(transformTest)
+
+for (f in features) {
+  if ((class(transformTest[[f]])=="factor") || (class(transformTest[[f]])=="character")) {
+    levels <- unique(transformTest[[f]])
+    transformTest[[f]] <- as.numeric(factor(transformTest[[f]], levels=levels))
+  }
+}
+
+predictions = predict(nycDataXGB,transformTest)
+makeToOne = function(preds){
+  if(preds < 0){
+    return(0.0)
+  }  else  {
+    return(preds)
+  }
+}
+
+predictions = sapply(predictions,makeToOne)
+
+predictions = exp(predictions)
+
+predictionsDF = data.frame(id = test$id, trip_duration = predictions)
+
+write.csv(predictionsDF, file = "nycXGBExpPCA2.csv",row.names=FALSE)
+
+```
