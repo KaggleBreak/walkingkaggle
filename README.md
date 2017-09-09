@@ -4,9 +4,9 @@
 - 시즌 2 : 2017/08/26 ~ 미정
 
 * https://www.facebook.com/groups/kagglebreak/
-* https://drive.google.com/drive/folders/0B2l0iH28o85xcHJRNWNUc1FvbEk
-* 장소 :kosslab (선릉역 근처)
-* 격주 토요일
+* https://drive.google.com/drive/folders/0B2l0iH28o85xSG83OTVfMzhhNFE
+* 장소 : 강남 토즈점
+* 격주 토요일 오전
 * 스터디 KossLab(공개SW 개발자센터)에서 장소를 지원하고 있습니다.
 
 
@@ -18,7 +18,11 @@
 |2017.09.09(토)|택시 R|택시 R팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/R/interactive_R.nb.html)
 ||택시 Python (A)|택시 Python 장철원팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Jang/NewYork_Taxi_20170908_%EC%9E%A5%EC%B2%A0%EC%9B%90.ipynb)
 ||택시 Python (B)|택시 Python 박상언팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/park/0906.%20Univariate%20Graph%20.ipynb)
-||Zilow Python|Zilow Python팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/python/Zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
+||Zilow Python|Zilow Python 김연민팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/python/Zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
+|2017.09.23(토)|부동산 Python|부동산 Python 유은환팀|
+||Zilow Python|Zilow Python 이규영팀|
+||타이타닉 Python|타이타닉 Python 안휘진팀|
+||Zilow R|Zilow R 하정철팀|
 
 
 * 시즌 1 주제
