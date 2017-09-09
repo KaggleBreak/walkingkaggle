@@ -18,11 +18,11 @@
 |2017.09.09(토)|택시 R|택시 이상열팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/R/interactive_R.nb.html)
 ||택시 Python (A)|택시 Python 장철원팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Jang/NewYork_Taxi_20170908_%EC%9E%A5%EC%B2%A0%EC%9B%90.ipynb)
 ||택시 Python (B)|택시 Python 박상언팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/park/0906.%20Univariate%20Graph%20.ipynb)
-||Zilow Python|Zilow Python 김연민팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/python/Zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
+||Zillow Python|Zillow Python 김연민팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/python/Zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
 |2017.09.23(토)|부동산 Python|부동산 Python 유은환팀 중간발표|
-||Zilow Python|Zilow Python 이규영팀 중간발표|
+||Zillow Python|Zillow Python 이규영팀 중간발표|
 ||타이타닉 Python|타이타닉 Python 안휘진팀 중간발표|
-||Zilow R|Zilow R 하정철팀 중간발표|
+||Zillow R|Zilow R 하정철팀 중간발표|
 
 
 * 시즌 1 주제
