@@ -16,12 +16,17 @@
 |---|---|---|---|
 |2017.08.26(토)|스터디 소개|이상열|[스터디 소개](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/house_prices_tutorial.html)
 |2017.09.09(토)|택시 R|택시 이상열팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/R/interactive_R.nb.html)
-||택시 Python (A)|택시 Python 장철원팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Jang/NewYork_Taxi_20170908_%EC%9E%A5%EC%B2%A0%EC%9B%90.ipynb)
-||택시 Python (B)|택시 Python 박상언팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/park/0906.%20Univariate%20Graph%20.ipynb)
-||Zillow Python|Zillow Python 김연민팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/python/Zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
-|2017.09.23(토)|부동산 Python|부동산 Python 유은환팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/Python_%EC%9C%A0%EC%9D%80%ED%99%98/%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C/House%20Price_Python_%EC%9C%A0%EC%9D%80%ED%99%98(%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C).ipynb)
-||Zillow Python|Zillow Python 이규영팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/R/Zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C_%EC%9D%B4%EA%B7%9C%EC%98%81.pptx)
-||Zillow R|Zilow R 하정철팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/R/zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C_%ED%95%98%EC%A0%95%EC%B2%A0.pptx)
+||택시 Python (A)|택시 장철원팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Jang/NewYork_Taxi_20170908_%EC%9E%A5%EC%B2%A0%EC%9B%90.ipynb)
+||택시 Python (B)|택시 박상언팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/park/0906.%20Univariate%20Graph%20.ipynb)
+||Zillow Python|Zillow 김연민팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/python/Zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
+|2017.09.23(토)|부동산 Python|부동산 유은환팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/Python_%EC%9C%A0%EC%9D%80%ED%99%98/%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C/House%20Price_Python_%EC%9C%A0%EC%9D%80%ED%99%98(%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C).ipynb)
+||Zillow Python|Zillow 이규영팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/R/Zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C_%EC%9D%B4%EA%B7%9C%EC%98%81.pptx)
+||Zillow R|Zilow 하정철팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/R/zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C_%ED%95%98%EC%A0%95%EC%B2%A0.pptx)
+|2017.10.14(토)|택시 R|택시 이상열팀 최종발표|
+||Zillow Python|Zillow 김연민팀 최종발표|
+||Zillow Python|Zillow 양종열팀 최종발표|
+||택시 Python|택시 장철원팀 최종발표|
+||택시 Python|택시 박상언팀 최종발표|
 
 
 * 시즌 1 주제
