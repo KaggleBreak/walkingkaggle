@@ -23,7 +23,7 @@
 ||Zillow Python(B)|Zillow 이규영팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/R/Zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C_%EC%9D%B4%EA%B7%9C%EC%98%81.pptx)
 ||Zillow R|Zilow 하정철팀 중간발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/R/zillow_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C_%ED%95%98%EC%A0%95%EC%B2%A0.pptx)
 |2017.10.14(토)|택시 R|택시 이상열팀 최종발표|[발표자료](http://htmlpreview.github.io/?https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/R/taxiR_Final.html)
-||Zillow Python(A)|Zillow 김연민팀 최종발표|
+||Zillow Python(A)|택시 김찬희팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Kim/%EB%89%B4%EC%9A%95%ED%83%9D%EC%8B%9C_%EA%B9%80%EC%B0%AC%ED%9D%AC.ipynb)
 ||Zillow Python(C)|Zillow 양종열팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/python/zillow_python_%EC%96%91%EC%A2%85%EC%97%B4_20171014.pdf)
 ||택시 Python (A)|택시 장철원팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Jang/NewYork_Taxi_20171012_%EC%9E%A5%EC%B2%A0%EC%9B%90.ipynb)
 ||택시 Python (B)|택시 박상언팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/park/Learning.ipynb)
