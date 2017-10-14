@@ -27,6 +27,12 @@
 ||Zillow Python(C)|Zillow 양종열팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/python/zillow_python_%EC%96%91%EC%A2%85%EC%97%B4_20171014.pdf)
 ||택시 Python (A)|택시 장철원팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Jang/NewYork_Taxi_20171012_%EC%9E%A5%EC%B2%A0%EC%9B%90.ipynb) [발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Kim/%EB%89%B4%EC%9A%95%ED%83%9D%EC%8B%9C_%EA%B9%80%EC%B0%AC%ED%9D%AC.ipynb)
 ||택시 Python (B)|택시 박상언팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/park/Learning.ipynb)
+|2017.10.28(토)|부동산 Python|부동산 유은환팀|
+||Zillow Python(B)|Zillow 이규영팀 최종발표|
+||Zilow R|Zilow 하정철팀 최종발표|
+||타이타닉|타이타닉 김태완팀 최종발표|
+||House prices|House prices 이춘호팀 최종발표|
+||kkbox-churn|kkbox-churn 박준영팀 최종발표|
 
 
 * 시즌 1 주제
