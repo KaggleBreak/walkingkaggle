@@ -29,7 +29,7 @@
 ||택시 Python (B)|택시 박상언팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/park/Learning.ipynb)
 |2017.10.28(토)|부동산 Python|부동산 유은환팀|
 ||Zillow Python(B)|Zillow 이규영팀 최종발표|
-||Zilow R|Zilow 하정철팀 최종발표|
+||Zilow R|Zillow 하정철팀 최종발표|
 ||타이타닉|타이타닉 김태완팀 최종발표|
 ||House prices|House prices 이춘호팀 최종발표|
 ||kkbox-churn|kkbox-churn 박준영팀 최종발표|
