@@ -1,7 +1,8 @@
 # 워킹캐글 Part2 
 캐글뽀개기 주말반(워킹캐글) 스터디 자료모음
 - 시즌 1 : 2017/4/8 ~ 2017/5/13
-- 시즌 2 : 2017/08/26 ~ 미정
+- 시즌 2 : 2017/08/26 ~ 2017/10/28
+- 시즌 3 : 날짜 미정
 
 * https://www.facebook.com/groups/kagglebreak/
 * https://drive.google.com/drive/folders/0B2l0iH28o85xSG83OTVfMzhhNFE
@@ -30,7 +31,7 @@
 |2017.10.28(토)|부동산 Python|부동산 유은환팀|
 ||Zillow Python(B)|Zillow 이규영팀 최종발표|
 ||Zilow R|Zillow 하정철팀 최종발표|
-||타이타닉|타이타닉 김태완팀 최종발표|
+||타이타닉|타이타닉 홍지현팀 최종발표|
 ||House prices|House prices 이춘호팀 최종발표|
 ||kkbox-churn|kkbox-churn 박준영팀 최종발표|
 
