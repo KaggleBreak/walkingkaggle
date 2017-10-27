@@ -28,12 +28,12 @@
 ||Zillow Python(C)|Zillow 양종열팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/python/zillow_python_%EC%96%91%EC%A2%85%EC%97%B4_20171014.pdf)
 ||택시 Python (A)|택시 장철원팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Jang/NewYork_Taxi_20171012_%EC%9E%A5%EC%B2%A0%EC%9B%90.ipynb) [발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/Kim/%EB%89%B4%EC%9A%95%ED%83%9D%EC%8B%9C_%EA%B9%80%EC%B0%AC%ED%9D%AC.ipynb)
 ||택시 Python (B)|택시 박상언팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/taxi/Python/park/Learning.ipynb)
-|2017.10.28(토)|부동산 Python|부동산 유은환팀|
-||Zillow Python(B)|Zillow 이규영팀 최종발표|
-||Zilow R|Zillow 하정철팀 최종발표|
-||타이타닉|타이타닉 홍지현팀 최종발표|
-||House prices|House prices 이춘호팀 최종발표|
-||kkbox-churn|kkbox-churn 박준영팀 최종발표|
+|2017.10.28(토)|부동산 Python|부동산 유은환팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/Python_%E1%84%8B%E1%85%B2%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%92%E1%85%AA%E1%86%AB/%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C/HousePrice_Final_(%EC%9C%A0%EC%9D%80%ED%99%98).html)
+||Zillow Python(B)|Zillow 이규영팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/zillow/R/Zillow_%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C_%EC%9D%B4%EA%B7%9C%EC%98%81.pptx)
+|~~|Zilow R|Zillow 하정철팀 최종발표|~~
+||타이타닉|타이타닉 홍지현팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/titanic/Titanic_%ED%99%8D%EC%A7%80%ED%98%84_%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C.pptx)
+||House prices|House prices 이춘호팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/R_%EC%9D%B4%EC%B6%98%ED%98%B8/kaggleHousePrice.html)
+||kkbox-churn|kkbox-churn 박준영팀 최종발표|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/kkbox/KKBox_Prediction.pdf)
 
 
 * 시즌 1 주제
