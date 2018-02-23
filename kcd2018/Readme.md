@@ -15,7 +15,7 @@
 
 | 발표 시간  | 튜토리얼 내용 | 발표자료 |
 | :------------ | :-----------: | :-----------: |
-| 15:20 ~ 16:20    | (첫 번째 시간) 캐글 및 세팅|[[발표자료]()|
+| 15:20 ~ 16:20    | (첫 번째 시간) 캐글 및 세팅|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/kcd2018/01_start.html)|
 | 16:40 ~ 17:50   | (두 번째 시간) 문제 풀어보기 |[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/kcd2018/02.end.html)|
 
 
