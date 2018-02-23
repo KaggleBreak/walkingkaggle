@@ -41,8 +41,8 @@ autosize: false
 ![](img/na1.png)
 
 - 산업공학(학부/석사) 전공, ADP, 사회조사분석사2급, 식스시그마 GB 자격증
+- (현재 경력) 게임 데이터 분석가, (과거 경력) 은행 AI Lab / 게임 데이터 분석가
 - 취미 : 커뮤니티 운영
-
 - 캐글뽀개기 운영진 (현재, https://www.facebook.com/groups/kagglebreak)
 - Email : syleeie@gmail.com
 
@@ -50,11 +50,12 @@ autosize: false
 ========================================================
 
 ## 자료 링크
-- 실습의 해당되는 데이터 및 코드는 github 및 링크를 통해 공유드립니다.
+- 실습에 해당되는 데이터 및 코드는 github 및 링크를 통해 공유드립니다.
 github을 clone 또는 download 해주시면 됩니다.
-- 워킹캐글(캐글뽀개기 스터디 이름) Github : [Tutorial Github](https://github.com/KaggleBreak/walkingkaggle)
+- 워킹캐글(캐글뽀개기 스터디 이름) Github : [Tutorial Github](https://github.com/KaggleBreak/walkingkaggle/tree/master/kcd2018)
+
 - 자료 링크 : [다운로드]()
-- usb로 봉사자 분들이 지금부터 전달드릴 예정입니다. 본인 데스크탑으로 파일을 옮겨주세요. (R 설치파일/Rstudio 설치파일/package 설치파일/data/code 포함)
+- usb로 봉사자 분들이 지금부터 전달드릴 예정입니다. usb 받으시면 본인 데스크탑 적당한 곳으로 파일을 옮겨주세요. (파일 안에는 R, Rstudio 설치 파일, 데이터/코드 자료 등)
 
 ========================================================
 ## Show Time (R)
@@ -146,28 +147,29 @@ Open Source License
 
 - 데이터 과학의 피라미드 (Monica Rogati’s fantastic Medium post “The AI Hierarchy of Needs”)
 
-- 인공지능은 피라미드의 꼭대기라고 표현하는데 프레임 워 크를 접근하기 위해서 결국 데이터 수집부터 되어 있어야 함
+- 인공지능은 피라미드의 꼭대기라고 표현하는데 프레임 워크를 접근하기 위해서 결국 데이터 수집부터 되어 있어야 함
 
 ========================================================
 ## Oreilly 미디어의 2017 European Data Science Salary (1)
 
 ![](img/o1_1.png)
 
-![](img/o1_2.png)
-
 - 유럽 응답자의 상위 4 개 도구는 모든 응답자의 절반 이상이 사용하는 Excel, SQL, R 및 PYTHON
 - 네 가지 도구는 데이터 급여 설문 조사에서 최고 순위를 지키고 있음. 
+
+![](img/o1_2.png)
 
 ========================================================
 ## Oreilly 미디어의 2017 European Data Science Salary (2)
 
 ![](img/o1_3.png)
 
-![](img/o1_4.png)
-
 - 보편적인 작업 중에는 "기본 탐색 데이터 분석", "데이터 정리", "시각화 만들기" 및 "연구 질문에 답변하기 위한 데이터 분석 수행"이 주로 포함됨
 
+![](img/o1_4.png)
+
 - 높은 급여와 가장 밀접하게 관련이 있는 업무는 "비즈니스 의사 결정자에게 결과 통보", "분석으로 해결할 비즈니스 문제 식별", "팀 프로젝트 구성 및 안내"
+
 
 ========================================================
 ## Machine-learning odysse
