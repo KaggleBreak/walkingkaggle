@@ -4,9 +4,9 @@
 - 파트 2 : 2017/08/26 ~ 2017/10/28
 - 파트 3 : 2018/03/10 ~ 
 
-* https://www.facebook.com/groups/kagglebreak/
-* https://drive.google.com/drive/folders/0B2l0iH28o85xSG83OTVfMzhhNFE
-* 장소 : 강남 토즈점 / DMC (미정)
+* 운영그룹 캐글뽀개기 (https://www.facebook.com/groups/kagglebreak/)
+* 스터디 일정표 (https://drive.google.com/drive/folders/0B2l0iH28o85xSG83OTVfMzhhNFE)
+* 장소 : 강남 토즈점 / DMC 상암
 * 격주 토요일 오전
 * 스터디 KossLab(공개SW 개발자센터)에서 장소를 지원하고 있습니다.
 
