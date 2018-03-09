@@ -280,21 +280,23 @@ type: prompt
 
 * 후보 주제(1)
 : [Google Cloud & NCAA® ML Competition 2018 Men](https://www.kaggle.com/c/mens-machine-learning-competition-2018)
-  - Kagglers는 과거의 토너먼트 결과를 바탕으로 모델을 제작하고 테스트합니다. 유용한 외부 데이터를 데이터 세트로 게시하는 것이 좋습니다. 두 번째 단계에서 경쟁 업체는 2018년 NCAA Division I Men's 및 Women 's Basketball Championships에서 가능한 모든 경기의 결과를 예측합니다. 첫 번째 단계는 모델 구축에 대한 인센티브를 제공하고 예측을 평가할 수있는 수단을 제공합니다. 실제 경쟁은 2018 년의 결과를 예측합니다.
+  - Kagglers는 과거의 토너먼트 결과를 바탕으로 모델을 제작하고 테스트합니다.두 번째 단계에서 경쟁 업체는 2018년 NCAA Division I Men's 및 Women 's Basketball Championships에서 가능한 모든 경기의 결과를 예측합니다. 첫 번째 단계는 모델 구축에 대한 인센티브를 제공하고 예측을 평가할 수있는 수단을 제공합니다. 실제 경쟁은 2018 년의 결과를 예측합니다.
   - Stage 1 - Model Building (~Mar 10), LogLoss, [Evalution](https://www.kaggle.com/c/mens-machine-learning-competition-2018#evaluation)
   
 * 후보 주제(2)
-: [Google Cloud & NCAA® ML Competition 2018 women](https://www.kaggle.com/c/womens-machine-learning-competition-2018)
+: [TalkingData AdTracking Fraud Detection Challenge](https://www.kaggle.com/c/talkingdata-adtracking-fraud-detection)
+  - 하루에 30 억 회의 클릭을 처리하며, 그 중 90 %가 잠재적으로 사기성이 있습니다. 클릭 사기를 방지하는 방법은 포트폴리오에서 사용자의 클릭 경로를 측정하고 많은 클릭을 발생시키는 IP 주소를 신고하지만 결코 앱 설치를 중단하지 않는 것입니다. 2 차 경쟁에서 모바일 앱 광고를 클릭 한 후 사용자가 앱을 다운로드할지 여부를 예측하는 알고리즘을 작성해야합니다. 
+  - May 7, 2018, ROC Curve, [Evalution](https://www.kaggle.com/c/talkingdata-adtracking-fraud-detection#evaluation) 
 
 * 후보 주제(3)
 : [Toxic Comment Classification Challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge)
-  - 온라인에서 학대와 괴롭힘의 위협은 많은 사람들이 자신을 표현하지 않고 다른 의견을 찾는 것을 포기하는 것을 의미합니다. 초점 영역은 독성적인 코멘트(부정적인 온라인 행동)을 연구하는 것입니다. Perspective의 현재 모델보다 위협, 외설, 모욕, 신원 기반 혐오와 같은 다른 유형의 독성을 탐지 할 수있는 모델을 구축해야합니다. Wikipedia의 토론 페이지 편집 내용의 데이터 세트를 사용하게됩니다.
+  - 온라인에서 학대와 괴롭힘의 위협은 많은 사람들이 자신을 표현하지 않고 다른 의견을 찾는 것을 포기하는 것을 의미합니다. 초점 영역은 독성적인 코멘트(부정적인 온라인 행동)을 연구하는 것입니다. Perspective의 현재 모델보다 위협, 외설, 모욕, 신원 기반 혐오와 같은 다른 유형의 독성을 탐지 할 수있는 모델을 구축해야합니다. 
   - Entry deadline March 13, 2018, LogLoss, [Evalution](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge#evaluation)  
   
   
 * 후보 주제(4)
 : [Google Landmark Recognition Challenge](https://www.kaggle.com/c/landmark-recognition-challenge/data)
-  - 이미지 픽셀에서 직접랜드 마크 레이블을 예측하여 사람들이 사진 컬렉션을 더 잘 이해하고 구성 할 수 있도록 도와줍니다. 이 경쟁은 Kagglers가 까다로운 테스트 이미지의 데이터 세트에서 올바른 랜드 마크 (있는 경우)를 인식하는 모델을 작성하도록 요구합니다. 많은 Kagglers는 IKVRC (ImageNet Large Scale Visual Recognition Challenge)와 같은 이미지 분류 문제에 익숙합니다. 이 과제는 Landmark Retrieval Challenge (https://www.kaggle.com/c/landmark-retrieval-challenge)와 함께 구성됩니다. 특히, 두 도전 과제 모두에 대한 시험 세트는 참가자들이 두 가지 모두에서 경쟁하도록 권장한다는 점에 유의하십시오. 
+  - 이미지 픽셀에서 직접랜드 마크 레이블을 예측하여 사람들이 사진 컬렉션을 더 잘 이해하고 구성 할 수 있도록 도와줍니다. 까다로운 테스트 이미지의 데이터 세트에서 올바른 랜드 마크를 인식하는 모델을 작성하도록 요구합니다. 이 과제는 Landmark Retrieval Challenge (https://www.kaggle.com/c/landmark-retrieval-challenge)와 함께 구성됩니다. 특히, 두 도전 과제 모두에 대한 시험 세트는 참가자들이 두 가지 모두에서 경쟁하도록 권장한다는 점에 유의하십시오. 
   - May 15, 2018 - Entry deadline, LogLoss, [Evalution](https://www.kaggle.com/c/landmark-recognition-challenge#evaluation)  
   
 
