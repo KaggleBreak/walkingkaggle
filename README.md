@@ -16,7 +16,8 @@
 
 |요일   |주제   |발표자   |발표자료   |
 |---|---|---|---|
-|2018.03.10(토)|스터디 소개|이상열|
+|2018.03.10(토)|스터디 소개|이상열|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/part3.html)
+||KKBox's Churn Prediction Challenge 대회 결과 공유|류지승|
 
 
 * 파트 2 주제
