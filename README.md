@@ -20,7 +20,7 @@
 ||KKBox's Churn Prediction Challenge 대회 결과 공유|류지승|[발표자료](https://github.com/RyuJiseung/WSDM_2018/blob/master/kkbox_churn_prediction.pdf)
 |2018.03.31(토)|Toxic 팀 중간발표|김지현 팀|
 ||AD Tracking A팀(R) 중간발표|홍정우 팀|
-||AD Tracking B팀(R) 중간발표|류지승 팀|
+||AD Tracking B팀(R) 중간발표|류지승 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/adtrack_pptx.pdf)
 ||AD Tracking C팀(Python) 중간발표|서범석 팀|
 ||AD Tracking D팀(Python) 중간발표|이봉호 팀|
 ||Google Landmark Recognition 중간발표|정지원 팀|
