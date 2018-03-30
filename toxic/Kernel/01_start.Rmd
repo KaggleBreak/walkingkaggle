@@ -1,0 +1,107 @@
+---
+title: "toxic_start"
+author: "syleeie"
+date: '2018 3 10 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(wordcloud)
+library(RColorBrewer)
+library(gridExtra)
+library(tidytext)
+library(ggthemes)
+library(plotly)
+```
+
+## Sourcing the files  
+```{r}
+comment_data<-read.csv("./data/train.csv")
+```
+
+### Structure of the file  
+```{r}
+str(comment_data)
+sum(is.na(comment_data))
+```
+
+Source file  consist of 95851 observations and  8 variables.  It has comment text and the classes of text as Toxic,severe toxic,  
+insult,obsence,threat,identity_hate. Each of the comments falls in any one  of the classes.
+
+
+### Comments under each Category
+Lets visualize the number of comments under each class.
+```{r}
+d<-data.frame(comment=colnames(comment_data[,3:8]),count=colSums(comment_data[,3:8]))
+
+ggplotly(d %>% ggplot(aes(x=comment,y=count,fill=comment))+geom_bar(stat="identity")+theme(legend.position = "none")+labs(title="Comments in each category")
+)
+```
+
+## Tokenization
+Before split the comments in to tokens, convert the text in to character.
+```{r}
+unnest_reg <- "([^A-Za-z_\\d#@']|'(?![A-Za-z_\\d#@]))"
+
+comment_data$comment_text<-as.character(comment_data$comment_text)
+
+tidy_comment<-comment_data %>%unnest_tokens(word,comment_text,token = "regex", pattern = unnest_reg)
+```
+
+### Most Common words in the Comments
+```{r}
+
+tidy_text<-tidy_comment %>%anti_join(stop_words,by="word")
+par(bg="black")
+tidy_text%>%count(word,sort=TRUE)%>%with(wordcloud(word,n,max.words=100,col=terrain.colors(length(word),alpha=0.9),rot.per=0.3),main="Most Used words in Comments")
+title(main="Top 100 words used in comments",main.col="red")
+```
+
+
+### Word Cloud on Comment Classes
+Let's build  wordclouds on each of text category.
+```{r }
+par(mfrow=c(1,2))
+par(bg="black")
+tidy_text%>%filter(toxic==1)%>%count(word,sort=TRUE)%>%with(wordcloud(word,n,max.words=150,col=terrain.colors(length(word),alpha=0.9),rot.per=0.3))
+title(main="Toxic",col.main="Red")
+tidy_text%>%filter(severe_toxic==1)%>%count(word,sort=TRUE)%>%with(wordcloud(word,n,max.words=150,col=terrain.colors(length(word),alpha=0.9),rot.per=0.3))
+title(main="Severe Toxic ",col.main="Red")
+tidy_text%>%filter(threat==1)%>%count(word,sort=TRUE)%>%with(wordcloud(word,n,max.words=150,col=terrain.colors(length(word),alpha=0.9),rot.per=0.3))
+title(main="Threat ",col.main="Red")
+tidy_text%>%filter(insult==1)%>%count(word,sort=TRUE)%>%with(wordcloud(word,n,max.words=150,col=terrain.colors(length(word),alpha=0.9)))
+title(main="Insult ",col.main="Red")
+tidy_text%>%filter(insult==1)%>%count(word,sort=TRUE)%>%with(wordcloud(word,n,max.words=150,col=terrain.colors(length(word),alpha=0.9)))
+title(main="Identity Hate ",col.main="Red")
+tidy_text%>%filter(obscene==1)%>%count(word,sort=TRUE)%>%with(wordcloud(word,n,max.words=150,col=terrain.colors(length(word),alpha=0.9)))
+title(main="Obscene ",col.main="Red")
+```
+
+From the word frequency wordclouds, we could see that same word occurring each of the comments category, It didn't  
+give us a clear picture what plays the role in classifying the text as toxic, severe toxic and so on..
+
+So lets get the bigrams and find  out will it provide any insight
+
+## Bigrams
+```{r}
+comment_bigram<-comment_data %>%unnest_tokens(bigram,comment_text,token = "ngrams", n = 2)
+```
+
+```{r fig.height=8}
+com_bigram<-comment_bigram %>%separate(bigram, c("word1", "word2"), sep = " ")%>%filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)%>%filter(!word1 ==word2)%>%unite(bigram,word1,word2,sep=" ")
+c1<-com_bigram%>%filter(toxic==1)%>%count(bigram,sort=TRUE)%>%head(10)%>%ggplot(aes(x=reorder(bigram,n),y=n))+geom_bar(stat="identity",fill="#ee3412")+coord_flip()+labs(title="Toxic ")+theme_fivethirtyeight()
+c2<-com_bigram%>%filter(severe_toxic==1)%>%count(bigram,sort=TRUE)%>%head(10)%>%ggplot(aes(x=reorder(bigram,n),y=n))+geom_bar(stat="identity",fill="#357051")+coord_flip()+labs(title="Severe Toxic ")+theme_fivethirtyeight()
+c3<-com_bigram%>%filter(insult==1)%>%count(bigram,sort=TRUE)%>%head(10)%>%ggplot(aes(x=reorder(bigram,n),y=n))+geom_bar(stat="identity",fill="#5f7036")+coord_flip()+labs(title="Insult ")+theme_fivethirtyeight()
+c4<-com_bigram%>%filter(obscene==1)%>%count(bigram,sort=TRUE)%>%head(10)%>%ggplot(aes(x=reorder(bigram,n),y=n))+geom_bar(stat="identity",fill="#4e4456")+coord_flip()+labs(title="Obscene ")+theme_fivethirtyeight()
+c5<-com_bigram%>%filter(identity_hate==1)%>%count(bigram,sort=TRUE)%>%head(10)%>%ggplot(aes(x=reorder(bigram,n),y=n))+geom_bar(stat="identity",fill="#60564f")+coord_flip()+labs(title="Identity Hate ")+theme_fivethirtyeight()
+c6<-com_bigram%>%filter(threat==1)%>%count(bigram,sort=TRUE)%>%head(10)%>%ggplot(aes(x=reorder(bigram,n),y=n))+geom_bar(stat="identity",fill="#472f2f")+coord_flip()+labs(title="Threat ")+theme_fivethirtyeight()
+grid.arrange(c1,c2,c3,c4,c5,c6,nrow=3,ncol=2)
+```
