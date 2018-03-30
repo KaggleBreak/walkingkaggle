@@ -23,7 +23,7 @@
 ||AD Tracking B팀(R) 중간발표|류지승 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/adtrack_pptx.pdf)
 ||AD Tracking C팀(Python) 중간발표|서범석 팀|
 ||AD Tracking D팀(Python) 중간발표|이봉호 팀|
-~~||Google Landmark Recognition 중간발표|정지원 팀|~~
+
 
 * 파트 2 주제
 
