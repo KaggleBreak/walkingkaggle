@@ -21,9 +21,8 @@
 |2018.03.31(토)|Toxic 팀 중간발표|김지현 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/toxic/Toxic%20Comment%20Classification_MD.pdf)
 ||AD Tracking A팀(R) 중간발표|홍정우 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/r-1%EC%A1%B0-%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C%ED%99%8D%EC%A0%95%EC%9A%B0.pdf)
 ||AD Tracking B팀(R) 중간발표|류지승 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/adtrack_pptx.pdf)
-||AD Tracking C팀(Python) 중간발표|서범석 팀|
-||AD Tracking D팀(Python) 중간발표|이봉호 팀|[발표자료](https://docs.google.com/presentation/d/1U5N58xDW97M5SzEozyqaiZuGpC3kgcczsqcyEe9XK4I/edit#slide=id.g35d4b4a4cc_0_5)
-
+||AD Tracking C팀(Python) 중간발표|서범석 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/tree/master/adtrack/Python/c%EC%A1%B0)
+||AD Tracking D팀(Python) 중간발표|이봉호 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/Python/d%EC%A1%B0/Mar%2031%20Walking%20Kaggle.pptx)
 
 * 파트 2 주제
 
