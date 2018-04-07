@@ -23,6 +23,12 @@
 ||AD Tracking B팀(R) 중간발표|류지승 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/adtrack_pptx.pdf)
 ||AD Tracking C팀(Python) 중간발표|서범석 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/tree/master/adtrack/Python/c%EC%A1%B0)
 ||AD Tracking D팀(Python) 중간발표|이봉호 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/Python/d%EC%A1%B0/Mar%2031%20Walking%20Kaggle.pptx)
+|2018.04.14(토)|Google Landmark A조 발표|황중원님|
+||Google Landmark B조 중간발표|문태봉 팀|
+||AD Tracking E팀(R) 중간발표|이재후 팀|
+||타이타닉 중간발표|김선빈 팀|
+||Toxic 최종발표|김지현 팀|
+
 
 * 파트 2 주제
 
