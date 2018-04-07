@@ -16,8 +16,8 @@
 
 |요일   |주제   |발표자   |발표자료   |
 |---|---|---|---|
-|2018.03.10(토)|스터디 소개|이상열|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/part3.html)
-||KKBox's Churn Prediction Challenge 대회 결과 공유|류지승|[발표자료](https://github.com/RyuJiseung/WSDM_2018/blob/master/kkbox_churn_prediction.pdf)
+|2018.03.10(토)|스터디 소개|이상열님|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/part3.html)
+||KKBox's Churn Prediction Challenge 대회 결과 공유|류지승님|[발표자료](https://github.com/RyuJiseung/WSDM_2018/blob/master/kkbox_churn_prediction.pdf)
 |2018.03.31(토)|Toxic 팀 중간발표|김지현 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/toxic/Toxic%20Comment%20Classification_MD.pdf)
 ||AD Tracking A팀(R) 중간발표|홍정우 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/r-1%EC%A1%B0-%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C%ED%99%8D%EC%A0%95%EC%9A%B0.pdf)
 ||AD Tracking B팀(R) 중간발표|류지승 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/adtrack_pptx.pdf)
