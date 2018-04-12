@@ -26,7 +26,7 @@
 |2018.04.14(토)|Google Landmark A조 발표|황중원님|
 ||Google Landmark B조 중간발표|문태봉 팀|
 ||AD Tracking E팀(R) 중간발표|이재후 팀|
-||타이타닉 중간발표|김선빈 팀|
+||타이타닉 중간발표|김선빈 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/titanic/Titanic_%EA%B9%80%EC%84%A0%EB%B9%88%EB%8B%98%EC%A1%B0_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
 ||Toxic 최종발표|김지현 팀|
 
 
