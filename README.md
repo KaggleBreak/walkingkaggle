@@ -24,7 +24,7 @@
 ||AD Tracking C팀(Python) 중간발표|서범석 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/tree/master/adtrack/Python/c%EC%A1%B0)
 ||AD Tracking D팀(Python) 중간발표|이봉호 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/Python/d%EC%A1%B0/Mar%2031%20Walking%20Kaggle.pptx)
 |2018.04.14(토)|Google Landmark A조 발표|황중원님|
-||Google Landmark B조 중간발표|문태봉 팀|
+||Google Landmark B조 중간발표|문태봉 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/landmark/Python/%EA%B5%AC%EA%B8%80%EB%9E%9C%EB%93%9C%EB%A7%88%ED%81%AC_%EB%AC%B8%ED%83%9C%EB%B4%89%EC%A1%B0_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
 ||AD Tracking E팀(R) 중간발표|이재후 팀|
 ||타이타닉 중간발표|김선빈 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/titanic/Titanic_%EA%B9%80%EC%84%A0%EB%B9%88%EB%8B%98%EC%A1%B0_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
 ||Toxic 최종발표|김지현 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/toxic/toxic_FInal.pdf)
