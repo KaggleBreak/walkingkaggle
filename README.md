@@ -28,7 +28,7 @@
 ||AD Tracking E팀(R) 중간발표|이재후 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/Python/e%EC%A1%B0/ADTracking%20E%EC%A1%B0%201%EC%B0%A8%20%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.pdf)
 ||타이타닉 중간발표|김선빈 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/titanic/Titanic_%EA%B9%80%EC%84%A0%EB%B9%88%EB%8B%98%EC%A1%B0_%EC%A4%91%EA%B0%84%EB%B0%9C%ED%91%9C.pptx)
 ||Toxic 최종발표|김지현 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/toxic/toxic_FInal.pdf)
-|2018.04.28(토)|부동산 조 중간발표|김기훈 팀|
+|2018.04.28(토)|부동산 조 중간발표|김기훈 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/%EA%B9%80%EA%B8%B0%ED%9B%88%ED%8C%80/House_Price_%EC%B5%9C%EC%A2%85_%EA%B9%80%EA%B8%B0%ED%9B%88%ED%8C%80.pdf)
 ||AD Tracking A팀(R) 최종발표|홍정우 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/ad_traking_r_%ED%99%8D%EC%A0%95%EC%9A%B0.pdf)
 ||AD Tracking F팀(Python) 중간발표|김인수 팀|
 
