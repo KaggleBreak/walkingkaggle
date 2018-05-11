@@ -36,7 +36,7 @@
 ||AD Tracking C팀(Python) 최종발표|서범석 팀|
 ||AD Tracking C팀(Python) 최종발표|서범석 팀|
 ||Google Landmark Recognition 최종발표|문태봉 팀|
-||부동산 팀 최종발표 최종발표|김기훈 팀|
+||부동산 팀 최종발표 최종발표|김기훈 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/%EA%B9%80%EA%B8%B0%ED%9B%88%ED%8C%80/House_Price_final.pdf)
 ||AD Tracking F팀(Python) 최종발표|김인수 팀|
 
 
