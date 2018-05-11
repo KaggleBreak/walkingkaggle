@@ -33,7 +33,7 @@
 ||AD Tracking F팀(Python) 중간발표|김인수 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/AdTracking_%EA%B9%80%EC%9D%B8%EC%88%98.pdf)
 |2018.05.12(토)|AD Tracking E팀(Python) 최종발표|이재후 팀|
 ||AD Tracking B팀(R) 최종발표|류지승 팀|
-||AD Tracking C팀(Python) 최종발표|서범석 팀|
+||타이타닉 최종발표|김선빈 팀|
 ||AD Tracking C팀(Python) 최종발표|서범석 팀|
 ||Google Landmark Recognition 최종발표|문태봉 팀|
 ||부동산 팀 최종발표 최종발표|김기훈 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/%EA%B9%80%EA%B8%B0%ED%9B%88%ED%8C%80/House_Price_final.pdf)
