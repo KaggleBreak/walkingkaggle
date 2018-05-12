@@ -31,11 +31,11 @@
 |2018.04.28(토)|부동산 조 중간발표|김기훈 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/%EA%B9%80%EA%B8%B0%ED%9B%88%ED%8C%80/House_Price_%EC%B5%9C%EC%A2%85_%EA%B9%80%EA%B8%B0%ED%9B%88%ED%8C%80.pdf)
 ||AD Tracking A팀(R) 최종발표|홍정우 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/ad_traking_r_%ED%99%8D%EC%A0%95%EC%9A%B0.pdf)
 ||AD Tracking F팀(Python) 중간발표|김인수 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/AdTracking_%EA%B9%80%EC%9D%B8%EC%88%98.pdf)
-|2018.05.12(토)|AD Tracking E팀(Python) 최종발표|이재후 팀|
-||AD Tracking B팀(R) 최종발표|류지승 팀|
-||타이타닉 최종발표|김선빈 팀|
-||AD Tracking C팀(Python) 최종발표|서범석 팀|
-||Google Landmark Recognition 최종발표|문태봉 팀|
+|2018.05.12(토)|AD Tracking E팀(Python) 최종발표|이재후 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/Python/e%EC%A1%B0/ADTracking%20E%EC%A1%B0%20%EC%B5%9C%EC%A2%85%20%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.pdf)
+||AD Tracking B팀(R) 최종발표|류지승 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/R/adtrack_%EC%B5%9C%EC%A2%85%EB%B3%B8_%EB%A5%98%EC%A7%80%EC%8A%B9.pdf)
+||타이타닉 최종발표|김선빈 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/titanic/%EC%BA%90%EA%B8%80%EB%BD%80%EA%B0%9C%EA%B8%B0(%ED%83%80%EC%9D%B4%ED%83%80%EB%8B%89)_%EC%B5%9C%EC%A2%85.pdf)
+||AD Tracking C팀(Python) 최종발표|서범석 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/adtrack/Python/c%EC%A1%B0/Ad-tracking_python_c%EC%A1%B0.pdf)
+||Google Landmark Recognition 최종발표|문태봉 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/landmark/2018.05.12_GoogleLandmark_Final_kaggle.pdf)
 ||부동산 팀 최종발표 최종발표|김기훈 팀|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/house_prices/%EA%B9%80%EA%B8%B0%ED%9B%88%ED%8C%80/House_Price_final.pdf)
 ||AD Tracking F팀(Python) 최종발표|김인수 팀|
 
