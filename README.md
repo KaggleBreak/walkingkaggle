@@ -7,7 +7,7 @@
 
 * 운영그룹 캐글뽀개기 (https://www.facebook.com/groups/kagglebreak/)
 * 스터디 구글드라이브 폴더 (https://drive.google.com/drive/folders/0B2l0iH28o85xSG83OTVfMzhhNFE)
-* 장소 : 강남 토즈점 / DMC 상암
+* 장소 : 토즈타워점 강남
 * 격주 토요일 오전
 * 스터디 KossLab(공개SW 개발자센터)에서 장소를 지원하고 있습니다.
 
