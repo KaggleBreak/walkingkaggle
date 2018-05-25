@@ -1,0 +1,281 @@
+Walking Kaggle Part4 소개
+========================================================
+author: Sang Yeol Lee
+date: `r format(Sys.Date(), format="%B %d %Y")`
+width: 1600 
+height: 1600
+transition: linear
+transition-speed: slow
+autosize: true
+
+========================================================
+id: slide1
+type: prompt
+
+### 대상자 
+  * **스터디는 취미 모임이기 때문에 참여는 누구나 가능, 다만 지속적으로 참여할 수 있는 분만** 
+  * 다만 R 또는 Python 중에서 최소 1개 언어를 다룰 줄 아셔야 되고 머신러닝 기초가 있어야 참여하는데 어렵지 않음.
+    - 언어를 다루지 못하고 머신러닝을 잘 모르시면 다른 스터디를 권유드립니다. ([싸이버스 참조](https://www.facebook.com/thepsybus))
+  * 오늘부터 토요일 격주로 진행 (오전 10시 ~ 오후 1시)
+    - 장소 : 강남 토즈타워 또는 강남 토즈2호점
+    - 스터디 관련 공지는 페이스북 대화창 또는 캐글뽀개기 페이스북, 싸이버스
+
+<br> 
+
+### 주제 : 캐글과 데이터사이언스(DS)
+  * 운영 지원: [캐글뽀개기](https://www.facebook.com/groups/kagglebreak) 
+  * 장소 지원: [kosslab](https://kosslab.kr/)
+  * [페북 이벤트 링크](https://www.facebook.com/events/772629919791548/)
+    - 스터디 자료는 구글드라이브 또는 github을 통해서 관리할 예정입니다.
+    - [github  주소](https://github.com/KaggleBreak/walkingkaggle)
+    - [스터디 구글드라이브](https://drive.google.com/drive/folders/0B2l0iH28o85xSG83OTVfMzhhNFE?usp=sharing) 
+    - [스터디 일정표](https://docs.google.com/spreadsheets/d/15OgrZKj6pD0jptFnkTIWioqC1_2_eoJidkysRXBlDyw/edit#gid=0)
+
+========================================================
+<br>
+
+## Kaggle - https://www.kaggle.com
+
+* Wikipedia - Kaggle?
+  - Kaggle은 기업 및 연구원이 데이터 및 통계를 게시하고 데이터 마이너가 예측 및 설명을 위한 최상의 모델을 만들기 위해 경쟁하는 예측 모델링 및 분석 경쟁을위한 플랫폼. 
+  - Crowdsourcing 접근 방식은 예측 모델링 작업에 적용 할 수있는 무수한 전략이 있으며 어떤 기술 또는 분석가가 가장 효과적인지를 처음부터 알 수 없다는 사실에 의존.
+
+<br>
+
+## 스터디 1회차 오늘 일정?
+  * 스터디 소개 (10시 ~ 10시50분)
+  * 쉬는 시간 (10시50분 ~ 11시)
+  * 각자 코딩하는 시간 (11시30분 ~ 12시30분)
+  * 자기소개 시간 (12시30분 ~ 13시)
+
+<br>
+
+## 자료참고 레퍼런스
+  [General Tips for participating Kaggle Competitions, Mark Peng, Taiwan Kaggle Master](https://www.slideshare.net/markpeng/general-tips-for-participating-kaggle-competitions) 
+
+
+***
+<div align="center">
+<img src="./img/part3.jpeg" width=900 height=900>
+<img src="./img/part4.jpg" width=900 height=900></div>
+
+
+========================================================
+## 1단계 : 기존 히스토리 (워킹캐글 Part 2)
+
+- Part2 : 조별로 인원을 나누어 Taxi 대회, Zillow 대회, House prices/타이타닉 대회, kkbox-churn 대회 참석
+- Zillow 대회에서 2팀 1차 대회 통과
+
+<img src="./img/part2_1.jpg" width=600 height=400>
+<img src="./img/part2_2.jpg" width=600 height=400>
+<img src="./img/part2_3.jpg" width=600 height=400>
+<img src="./img/part2_4.jpg" width=600 height=400>
+<img src="./img/part2_5.jpg" width=600 height=400>
+<img src="./img/part2_6.jpg" width=600 height=400>
+
+
+========================================================
+## 1단계 : 기존 히스토리 (워킹캐글 Part 3)
+
+- Part3 : 조별로 인원을 나누어 AD Tracking, Google Landmark, House prices/타이타닉, Toxic 참여
+
+<img src="./img/파트3_1.jpg" width=600 height=400>
+<img src="./img/파트3_2.jpg" width=600 height=400>
+<img src="./img/파트3_3.jpg" width=600 height=400>
+<img src="./img/파트3_4.jpg" width=600 height=400>
+<img src="./img/파트3_5.jpg" width=600 height=400>
+<img src="./img/파트3_6.jpg" width=600 height=400>
+<img src="./img/파트3_7.jpg" width=600 height=400>
+<img src="./img/파트3_8.jpg" width=600 height=400>
+
+========================================================
+## 1단계 : 컨셉 (워킹캐글 Part 4)
+
+### 회고
+
+- 조별로 진행하다보니 운영관리 이슈나 이탈자가 너무 많음
+- 발표 위주로 모임을 하다보니, 본인의 조 발표가 아니면 참석을 하지 않음
+- 자유로운 형태로 스터디가 자발적 운영이 되면 좋겠다는 소망(?)이 있음
+- 어려움, 어려움... 어려움 
+
+### 캐글-DS반 
+  * 데이터 사이언스의 중요성, 발표보다 코딩을 하는 시간
+  * 1. 캐글대회 참여하기 (https://www.kaggle.com/competitions)
+  * 2. 흥미로운 데이터셋 발굴하기 (https://www.kaggle.com/datasets)
+  * 3. 과거대회 우승자 인터뷰 및 커널 따라하기 
+  * 4. 데이터 사이언스 Learn (https://www.kaggle.com/learn/overview)
+  
+### 스터디 진행방식
+  * 격주 토요일 오전 10시~오후1시 강남 토즈타워점 또는 강남 토즈2호점에서 진행 
+  * 분석 환경은...
+    - Kaggle Kernel
+    - 클라우드(AWS, Azure) 활용
+      - 지원 정책 : 정해지면 공지하겠습니다
+    - [Colab](https://colab.research.google.com/)
+      - 구글 드라이브  + 쥬피터 노트북
+
+  * 발표 X ---> 자유롭게 모여서 코딩 ---> 그날 했던내용 서로 공유
+  * 총 스터디 시간이 격주로 3시간이면... 
+    - 처음 2시간 동안은 앞의 1,2,3,4번 중에서 자유롭게 공부하면 됨
+    - 2시간 이후 30분은 오늘했던 작업을 정리하는 시간
+    - 마지막 30분은 진행했던 것을 참가자들에게 공유하는 시간 
+      (발표는 최대 5분, 모든 사람이 할 필요는 없음)
+  
+  
+========================================================
+## 1단계 : 2회차 이후 진행할 예정
+
+  * 슬랙 가입
+    - Slack (슬랙 채널 : kagglekr.slack.com, 가입을 위해 이메일 초대드리겠습니다.)
+    - 이메일 초대를 위해 아래의 구글드라이브에 개인 이메일을 작성해주세요.
+    - https://docs.google.com/spreadsheets/d/15OgrZKj6pD0jptFnkTIWioqC1_2_eoJidkysRXBlDyw/edit#gid=2050467924
+    - 슬랙 사용법은 간단하게 알려드리겠습니다.
+    
+<img src="./img/study_2.png" width=600 height=400>
+    
+  * 참여비 접수
+    - 2회차 이후로 해당 스터디의 참여하실 분들에게 회비를 받겠습니다.
+    - 참여비는 파트4가 진행하는 동안 유지됩니다. (2회차 이후로 오실 수 있는 참여 횟수가 다르더라도 같은 비용을 받겠습니다.)
+    - 회비 : 30,000원 (입금 계좌 : 하나은행 39191002718205, 이상열)
+    - 회비는 추가로 발생할 토즈(장소 비용) + 운영 비용(책/간식비)
+  
+  * 출석부 관리
+    - 스터디 출석체크를 진행할 예정이고 방식은 slack 창에서 진행하겠습니다.
+    - slack #study_attendance 채널에 올려주시면 됩니다.
+    - 파트4 스터디를 한번도 빠지지않고 전원 참석하는 분들에게 소정의 선물(데이터사이언스 - 책)을 드리려고 합니다.
+    
+<img src="./img/study_1.png" width=600 height=400>
+
+
+
+========================================================
+## 2단계 : 일반적인 캐글 접근방법(1)
+[Go to slide 1](#/slide1)
+<div align="left">
+<img src="./img/img_1.png" width=800 height=600></div>
+
+* 일반적인 캐글의 데이터 셋은 Train set, Test Set으로 나뉨 (Submission 파일이 따로 있음)
+
+* Test Set은 대회 기간 동안 제출하면 채점 용도로 공개되어 있는 Public LB(Leardboard)와 대회 끝난 후 최종 채점을 평가하는 Private LB(Leardboard)가 있음
+
+* 물론 데이터 셋이 일반적이지 않을 수 있음
+  - 대회의 목적(상금, 직업, 지식 공유...)에 따라서 문제가 달라짐.
+
+
+========================================================
+## 2단계 : 일반적인 캐글 접근방법(2)
+<div align="left">
+<img src="./img/img_2.png" width=1000 height=800></div>
+
+- 캐글 프로세스는 데이터 분석의 절차 (서비스의 직접 반영하진 않지만, 커뮤니케이션은 포럼의 참가자들과 Kernel에서 Notebook 형태로 공유)
+
+- 1단계 데이터 전처리, 2단계 싱글 모델, 3단계 변수 구성, 4단계 탐색적 자료 분석, 5단계 다양한 모델 구성, 6단계 앙상블, 7단계 예측
+
+========================================================
+## 2단계 : 일반적인 캐글 접근방법(3)
+
+* 데이터 전처리 
+    - 데이터를 (로컬 혹은 서버)에서 읽을 수 있는 사이즈인지? (메모리, 하드) 
+    - 데이터의 마이그레이션은 어떻게 할 수 있는지?
+    - 변수로 구성할 수 있는 데이터와 구성할 수 없는 데이터가 무엇에 있는지?
+
+<br>
+
+* 싱글 모델
+    - 기본으로 대회에서 제공한 변수 기준으로 1차 모델을 구성
+
+<br>
+
+* 변수 구성
+    - Submission ID의 추가할 수 있는 변수가 어떤 것이 있을까?
+    - 변수 선택, 차원 축소, 중요한 변수 확인 (모델 기반)
+    - Single 모델 별로 유용한 변수를 추리는 것. 모델에 걸리는 시간 고려
+    - 텍스트 또는 카테고리 변수는 어떻게 활용할 것인지?
+    
+<br>
+    
+* 탐색적 자료 분석
+    - 변수들의 데이터의 분포는 어떻게 되는지? (단변량)
+    - 변수들간의 관계는 어떻게 되는지? (다변량)
+    - 이상치는 어떻게 확인하고 어떤 조치를 취할 수 있는지? 
+    - 데이터 정규화
+    - 어떤 변수를 더 추가할 수 있는지 아이디어 또는 인사이트 발견
+    
+
+========================================================
+## 2단계 : 일반적인 캐글 접근방법(4)
+
+* 다양한 모델 구성
+    - 문제가 회귀, 분류, 추천 어떤 것을 목적으로 삼고 있는지에 따라 모델 구성이 다름
+    - (분류) 로지스틱 회귀모형, Tree 모델, Bayesian 모델, 신경망 모델, Kernel 모델 등 구성 하여 모델 간의 결과 값 기반하여 상관관계 파악
+    - 모델들의 다양한 파라미터를 어떻게 구성할 것인지?
+        - 파라미터 별로 성능 파악 (조합), 또는 일반적으로 구성하는 파라미터를 디폴트로 구성
+
+<br>
+
+* 앙상블
+    - 블랜딩 작업 (모델에서 나오는 결과 값들의 평균을 가지고 예측할 것인지? 아니면 가중치?)
+    - 모델 결과들의 값들을 합쳐서 다시금 부스팅으로 학습
+    - Public의 제출하면서 다시금 파라미터 또는 모델을 조정하면서 학습
+   
+<br>
+
+* 제출
+    - Submission.csv 파일로 예측 결과를 데이터로 제출.
+    - 문제에 따라 제출 형태도 다르고 평가 방식도 다름.
+    - 클래스의 확률로 제출하거나, 클래스의 값을 제출하거나, 여러 개의 값 (상위 5개)를 제출하거나
+    - 평가 방식 F1 Score, Logloss... [https://en.wikipedia.org/wiki/Precision_and_recall]
+    
+
+========================================================
+## 2단계 : 일반적인 캐글 접근방법(5)
+
+- precision : 맞다고 예측 한 것 중에 실제로 정답이 얼마나 되나?  $${\displaystyle \mathrm {PPV} ={\frac {\mathrm {TP} }{\mathrm {TP} +\mathrm {FP} }}}$$
+- sensitivity : or Recall, 맞는 케이스에 대해 얼마나 많이 맞다고 실제로 예측했나?, $${\displaystyle \mathrm {TPR} ={\frac {\mathrm {TP} }{P}}={\frac {\mathrm {TP} }{\mathrm {TP} +\mathrm {FN} }}}$$
+
+- 숫자 인식 문제에서 “5-detector”로 binary class 문제를 맞춘다고 한다면 제일 왼쪽 부분에서 threshold를 결정하게 되면(오른쪽은 5, 왼쪽은 5가 아님) True 5를 잘 맞추게 됨. 그래서 True 5 모두 다 5라고 예측함. 다만 Precision 측면에서 5라고 주장한 것중에서(전체 8개)에서 2개가 틀리게 되어 75%(2, 6)
+- 중앙 부분에서 threshold를 결정하게 되면 Recall은 67% (True 5 중에서 2개를 놓치게 됨), Precision 측면에서는 5라고 주장한 것중에서 1개만 틀려서 80%.
+- 제일 오른쪽 부분에서 threshold를 결정하게 되면 Recall은 50% (True 5중에서 3개를 놓치게 됨), Precision 측면에서 5라고 주장한 것중에서 하나도 틀리지 않아 100%
+
+<div align="left">
+<img src="./img/img_5.png" width=1200 height=600></div>
+
+========================================================
+## 2단계 : 일반적인 캐글 접근방법(6)
+
+<div align="left">
+<img src="./img/img_3.png" width=800 height=600></div>
+
+
+- [Bias-Variance Tradeoff Wikipedia](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff)
+
+### Bias? 
+- Bias는 학습 알고리즘에서 잘못된 가정으로 부터 나오는 에러
+- High Bias - Low Variance / Underfitting , 몸무게 = Beta 0 + 키 * Beta1 일거야.
+
+### Variance?
+- Variance는 훈련 데이터 내의 작은 변동에 대한 민감성으로부터 나오는 에러이다. 높은 variance는 의도한(일반화) 학습결과를 내기보다는 훈련 데이터 내의 무작위 소음을 모델링함에 따라 과적합을 야기한다
+- Low Bias - High Variance / Overfitting , 몸무게 = Beta 0 + 키 * Beta1 + 키^2 * Beta2 + 키^3 * Beta3... + 키^8 + Beta8  일거야.
+
+- 어떤 모델이든 Underfitting 하거나 Overfitting 할 수 있음, 적정선을 찾아야 함. 주로 Train 데이터를 Validaton 하여 해당 에러와 Test 에러를 같이 확인, Test Error를 보기 전에 평가 함수를 구성하여 Validation Error를 확인하는 것이 핵심! (Cross Validation, Local CV)
+    
+
+========================================================
+## 2단계 : 일반적인 캐글 접근방법(7)
+
+<div align="left">
+<img src="./img/img_4.png" width=800 height=600></div>
+
+- K-Fold Cross Validation (K=5)
+
+- 균일하게 K 갯수만큼 Train 데이터를 쪼갬. k=5이면 5개로 쪼개서, Round 1~5번까지 Train data의 80%를 모델 구성하는데 사용하고 20%를 Validation 하는 데 사용, 해당 작업을 5번 거쳐서 평균 cv를 구하여 모델을 평가
+
+- local CV와 Public LB 간의 갭 차이가 나는 K를 찾는 것이 팁. 데이터가 Imbalance 되어 있다면 Stratified K-fold cv(목표변수의 클래스 비율을 똑같이 구성하여 쪼개는 방법)를 구성하라고 추천하고 있음
+
+- [Stratified K-fold cv, scikit-learn](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html)
+
+
+==================
+# The End
+
+- 다음 모임은 2주뒤 토요일에 있습니다 (6/9 10시~13시)
