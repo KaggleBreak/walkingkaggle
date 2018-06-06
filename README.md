@@ -17,8 +17,7 @@
 |요일   |주제   |발표자   |발표자료   |
 |---|---|---|---|
 |2018.05.26(토)|스터디 소개|이상열님|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/part4/part4.html)
-||||
-||||
+|2018.06.09(토)|Azure pass 사용법 안내|이상열님|
 
 
 * 파트 3 주제
