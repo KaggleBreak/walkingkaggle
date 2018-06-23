@@ -1,0 +1,503 @@
+---
+title: "speech_keras_tutorial"
+author: "syleeie"
+date: '2018 6 18 '
+output:
+  slidy_presentation:
+    code_folding: hide
+    df_print: paged
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 12
+    incremental: no
+    number_sections: no
+    slide_level: yes
+    smaller: yes
+    theme: cerulean
+    widescreen: yes
+  ioslides_presentation:
+    incremental: no
+  html_document:
+    self_contained: no 
+    fig_height: 6
+    fig_width: 12
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, error=FALSE, warning = FALSE)
+```
+
+```{r message=FALSE, warning=FALSE}
+setwd('/home/syleeie/syleeie/walkingkaggle/credictlisk')
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, skimr, GGally, plotly, viridis, 
+               caret, DT, data.table, lightgbm)
+
+```
+
+******
+## Load Dataset
+******
+
+```{r  message=FALSE, warning=FALSE}
+train <-fread('./input/application_train.csv', stringsAsFactors = FALSE, showProgress=F,
+              data.table = F, na.strings=c("NA","NaN","?", ""))
+test <-fread('./input/application_test.csv', stringsAsFactors = FALSE, showProgress=F,
+             data.table = F, na.strings=c("NA","NaN","?", ""))
+bureau <-fread('./input/bureau.csv', stringsAsFactors = FALSE, showProgress=F,
+             data.table = F, na.strings=c("NA","NaN","?", ""))
+prev <-fread('./input/previous_application.csv', stringsAsFactors = FALSE, showProgress=F,
+             data.table = F, na.strings=c("NA","NaN","?", ""))
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+train[sample(1:nrow(train), size = 1000),] %>% 
+  datatable(filter = 'top', options = list(
+    pageLength = 15, autoWidth = F
+  ))
+```
+
+
+- 여기에 표시된 것처럼 훈련 세트에는 122 개의 변수와 307511 건의 관측이 있습니다.
+
+- 데이터 세트의 전망, 관측 수, 열 수, 변수 범위, 누락 된 / 고유 한 값의 수, 히스토그램 등을 제공합니다. 대부분의 측면을 점검하는 원 스톱 도구로 사용할 수 있습니다. 한 번에 데이터.
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% skim() %>% kable()
+```
+
+
+
+```{r  message=FALSE, warning=FALSE}
+prev[sample(1:nrow(prev), size = 1000),] %>% 
+  datatable(filter = 'top', options = list(
+    pageLength = 15, autoWidth = F
+  ))
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+prev %>% skim() %>% kable()
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+bureau[sample(1:nrow(bureau), size = 1000),] %>% 
+  datatable(filter = 'top', options = list(
+    pageLength = 15, autoWidth = F
+  ))
+```
+
+
+
+```{r  message=FALSE, warning=FALSE}
+bureau %>% skim() %>% kable()
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+setdiff(names(train), names(test))
+```
+
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% count(TARGET) %>% kable()
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% 
+  count(TARGET) %>% 
+  plot_ly(labels = ~TARGET, values = ~n) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "Targey Distribution",  showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% 
+  count(CODE_GENDER) %>% 
+  plot_ly(labels = ~CODE_GENDER , values = ~n) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "Gender Distribution",  showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% 
+  count(NAME_CONTRACT_TYPE) %>% 
+  plot_ly(labels = ~NAME_CONTRACT_TYPE , values = ~n) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "CONTRACT Distribution",  showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% 
+  count(NAME_EDUCATION_TYPE) %>% 
+  plot_ly(labels = ~NAME_EDUCATION_TYPE , values = ~n) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "Education Distribution",  showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% 
+  count(NAME_HOUSING_TYPE) %>% 
+  plot_ly(labels = ~NAME_HOUSING_TYPE , values = ~n) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "Housing Type Distribution",  showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
+
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% 
+  count(NAME_INCOME_TYPE) %>% 
+  plot_ly(labels = ~NAME_INCOME_TYPE , values = ~n) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "Income Type Distribution",  showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% 
+  count(HOUSETYPE_MODE ) %>% 
+  plot_ly(labels = ~HOUSETYPE_MODE, values = ~n) %>%
+  add_pie(hole = 0.6) %>%
+  layout(title = "House Type Mode Distribution",  showlegend = T,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% 
+  mutate(TARGET=as.factor(TARGET)) %>% 
+  count(OCCUPATION_TYPE, TARGET) %>% 
+  plot_ly(x = ~OCCUPATION_TYPE , y = ~n, color = ~TARGET, type = "bar") %>%
+  # add_trace(y = ~LA_Zoo, name = 'LA Zoo')   %>%
+  layout(title = "Occupation Type Group",
+         barmode = 'group',
+         xaxis = list(title = ""),
+         yaxis = list(title = ""))
+
+train %>% 
+  mutate(TARGET=as.factor(TARGET)) %>% 
+  count(OCCUPATION_TYPE, TARGET) %>% 
+  plot_ly(x = ~OCCUPATION_TYPE , y = ~n, color = ~TARGET,type = "bar") %>%
+  # add_trace(y = ~LA_Zoo, name = 'LA Zoo')   %>%
+  layout(title = "Occupation Type Group" , 
+          barmode = 'stack',
+         xaxis = list(title = ""),
+         yaxis = list(title = ""))
+```
+
+
+
+```{r  message=FALSE, warning=FALSE}
+train %>% 
+  mutate(TARGET=as.factor(TARGET)) %>% 
+  count(ORGANIZATION_TYPE, TARGET) %>% 
+  plot_ly(x = ~ORGANIZATION_TYPE, y = ~n, color = ~TARGET, type = "bar") %>%
+  # add_trace(y = ~LA_Zoo, name = 'LA Zoo')   %>%
+  layout(title = "ORGANIZATION_TYPE Type Group",
+         barmode = 'group',
+         xaxis = list(title = ""),
+         yaxis = list(title = ""))
+
+train %>% 
+  mutate(TARGET=as.factor(TARGET)) %>% 
+  count(ORGANIZATION_TYPE, TARGET) %>% 
+  plot_ly(x = ~ORGANIZATION_TYPE , y = ~n, color = ~TARGET,type = "bar") %>%
+  # add_trace(y = ~LA_Zoo, name = 'LA Zoo')   %>%
+  layout(title = "ORGANIZATION_TYPE Type Group" , 
+          barmode = 'stack',
+         xaxis = list(title = ""),
+         yaxis = list(title = ""))
+```
+
+
+
+```{r  message=FALSE, warning=FALSE}
+
+graph <- list()
+
+for (i in 1:21){
+
+    graph[[i]] <- train[, sapply(train, is.numeric)] %>% na.omit() %>%
+        select(TARGET,((i-1)*5+1):((i-1)*5+5)) %>%
+        mutate(TARGET = factor(TARGET)) %>%
+        ggpairs(aes(col = TARGET, alpha=.4))
+    
+    print(graph[[i]])
+}
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+
+graph <- list()
+
+for (i in 1:6){
+  
+  graph[[i]] <- prev %>% 
+    mutate_if(is.character, funs(factor(.) %>% as.integer())) %>% 
+    left_join(train %>% select(SK_ID_CURR, TARGET), by = 'SK_ID_CURR') %>% 
+    na.omit() %>% 
+    select(((i-1)*6+1):((i-1)*6+6), TARGET) %>% 
+    mutate(TARGET = as.factor(TARGET)) %>% 
+    ggpairs(aes(col=TARGET, alpha=.6))
+  
+  print(graph[[i]])
+}
+
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+
+graph <- list()
+
+for (i in 1:3){
+  
+  graph[[i]] <- bureau %>% 
+    mutate_if(is.character, funs(factor(.) %>% as.integer())) %>% 
+    left_join(train %>% select(SK_ID_CURR, TARGET), by = 'SK_ID_CURR') %>% 
+    na.omit() %>% 
+    select(((i-1)*6+1):((i-1)*6+6), TARGET) %>% 
+    mutate(TARGET = as.factor(TARGET)) %>% 
+    ggpairs(aes(col=TARGET, alpha=.6))
+  
+  print(graph[[i]])
+}
+
+```
+
+
+
+```{r  message=FALSE, warning=FALSE}
+full <- bind_rows(train,test)
+
+Target <- train$TARGET
+Id <- test$SK_ID_CURR
+full[,c('SK_ID_CURR','TARGET')] <- NULL
+
+chr <- full[,sapply(full, is.character)]
+num <- full[,sapply(full, is.numeric)]
+
+chr[is.na(chr)] <- "Not Available"
+
+fac <- chr %>% 
+  lapply(as.factor) %>% 
+  as_data_frame()
+
+
+full <- bind_cols(fac, num)
+#rm(chr, fac, num)
+
+full[is.na(full)] <- 0
+
+num <- train[, sapply(train,is.numeric)]
+
+rm(train, test)
+
+train <- full[1:length(Target),]
+test <- full[(length(Target)+1):nrow(full),]
+```
+
+
+
+```{r  message=FALSE, warning=FALSE}
+set.seed(123)
+inTrain <- createDataPartition(Target, p=.9, list = F)
+
+tr <- train[inTrain,]
+va <- train[-inTrain,]
+
+tr_ta <- Target[inTrain]
+va_ta <- Target[-inTrain]
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+lgb.train = lgb.Dataset(data.matrix(tr), label = tr_ta)
+lgb.valid = lgb.Dataset(data.matrix(va), label = va_ta)
+
+
+params.lgb = list(
+  objective = "binary"
+  , metric = "auc"
+  , min_data_in_leaf = 1
+  , min_sum_hessian_in_leaf = 100
+  , feature_fraction = 1
+  , bagging_fraction = 1
+  , bagging_freq = 0
+)
+
+# Get the time to train the lightGBM model
+
+lgb.model <- lgb.train(
+    params = params.lgb
+    , data = lgb.train
+    , valids = list(val = lgb.valid)
+    , learning_rate = 0.05
+    , num_leaves = 7
+    , num_threads = 2
+    , nrounds = 3000
+    , early_stopping_rounds = 200
+    , eval_freq = 50
+ )
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+# get feature importance
+lgb.importance(lgb.model, percentage = TRUE) %>% head(20) %>% kable()
+tree_imp <- lgb.importance(lgb.model, percentage = TRUE) %>% head(20)
+lgb.plot.importance(tree_imp, measure = "Gain")
+```
+
+```{r  message=FALSE, warning=FALSE}
+# make test predictions
+lgb_pred <- predict(lgb.model, data = data.matrix(test), n = lgb.model$best_iter)
+
+result <- data.frame(SK_ID_CURR = Id, TARGET = lgb_pred)
+
+write.csv(result,"lgb_pred.csv", row.names = F)
+```
+
+
+```{r  message=FALSE, warning=FALSE}
+va %>%
+  na.omit() %>% 
+  mutate(TARGET = as.factor(va_ta)) %>% 
+  plot_ly(x=~EXT_SOURCE_1, y=~EXT_SOURCE_2,z= ~EXT_SOURCE_3, color=~TARGET, hoverinfo = 'text',
+          text = ~paste('TARGET:', TARGET,
+                        '<br>EXT_SOURCE_1:', EXT_SOURCE_1,
+                        '<br>EXT_SOURCE_2:', EXT_SOURCE_2,
+                        '<br>EXT_SOURCE_3:', EXT_SOURCE_3)) %>% 
+  add_markers(opacity = 0.8) %>%
+  layout(title = "3D Interactive Plot with the TOP Three Variables",
+         annotations=list(yref='paper',xref="paper",y=1.05,x=1.1, text="TARGET",showarrow=F),
+         scene = list(xaxis = list(title = 'EXT_SOURCE_1'),
+                      yaxis = list(title = 'EXT_SOURCE_2'),
+                      zaxis = list(title = 'EXT_SOURCE_3')))
+```
+
+```{r}
+require(AUC)
+require(caret)
+require(catboost)
+require(modelr)
+require(ModelMetrics)
+require(xgboost)
+require(matrixStats)
+```
+
+```{r}
+na.fill <- purrr::map(num, function(column) {
+  if (is.numeric(column)) {
+    return(median(column, na.rm = T))
+  } else {
+    column.tbl <- table(column)
+    return(names(column.tbl)[which.max(column.tbl)])
+  }
+})
+
+str(na.fill)
+numdata <- tidyr::replace_na(num, replace = na.fill)
+
+full <- bind_cols(fac, numdata)
+train <- full[1:length(Target),]
+test <- full[(length(Target)+1):nrow(full),]
+
+kf_catboost <- crossv_kfold(train, 5)
+```
+
+
+```{r}
+runCAT <- function(train_X, test_X=NULL, seed_val=2310, num_rounds=1000){
+  param <- list()
+  param['eval_metric'] = 'AUC'
+  param['learning_rate'] = 0.02
+  param['depth'] = 10
+  param['logging_level'] = 'Verbose'
+  param['thread_count'] = 16
+  param['border_count'] = 64
+  param['l2_leaf_reg'] = 3
+  param['prediction_type'] = 'Probability'
+  #param['od_type'] = 'Iter'
+  #param['od_wait'] = 20
+  param['rsm'] = 0.95
+  param['use_best_model'] = T
+  param['random_seed'] = seed_val # 초기값 설정 랜덤 안되게
+  param['iterations'] = num_rounds
+  plst = param
+  
+  if (!is.null(test_X)){
+    model = catboost.train(learn_pool=train_X, test_pool=test_X, params=plst)
+    pred_test_y = catboost.predict(model, test_X, prediction_type = 'Probability')
+  }
+  else{
+    model = catboost.train(learn_pool=train_X, test_pool=NULL, params=plst)
+    pred_test_y = catboost.predict(model, train_X, prediction_type = 'Probability')
+  }    
+  return(list(pred_test_y, model))
+}
+```
+
+```{r message=FALSE, warning=FALSE}
+cv_scores_CAT <- list()
+
+system.time(for (i in 1:5){
+  dev_x <- catboost.load_pool(train[kf_catboost$train[[i]]$idx,],
+                              label = Target[kf_catboost$train[[i]]$idx],
+                              cat_features = colnames(fac))
+  val_x <- catboost.load_pool(train[kf_catboost$test[[i]]$idx,],
+                              label = Target[kf_catboost$test[[i]]$idx],
+                              cat_features = colnames(fac))
+  results_CAT <- runCAT(dev_x, val_x)
+  cv_scores_CAT <- append(cv_scores_CAT, ModelMetrics::auc(actual=Target[kf_catboost$test[[i]]$idx], predicted=results_CAT[[1]]))
+  
+  #print(cv_scores)
+  #break
+})
+
+```
+
+
+```{r}
+cv_scores_CAT
+sort(catboost.get_feature_importance(results_CAT[[2]]), decreasing=T)[1:30]
+```
+
+
+```{r}
+test_x <- catboost.load_pool(test,
+                             cat_features = colnames(fac))
+
+final_catboost_predict <- catboost.predict(model = results_CAT[[2]], pool=test_x, prediction_type='Probability')
+
+
+result_catboost <- data.frame(SK_ID_CURR = Id, TARGET = final_catboost_predict)
+
+write.csv(result,"result_catboost2.csv", row.names = F)
+
+```
