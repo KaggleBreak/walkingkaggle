@@ -1,7 +1,7 @@
 # Saturday Azure live! 1809
 
 ## “Azure X Kaggle : 미국 택시요금 싸게 내는 법”
-![azurelive](./img/azurelive.png){:height="10%" width="10%"}
+![azurelive](./img/azurelive.png){:height="400px" width="400px"}
 
 - 일시 : 2018년 9월 15일, 시간 오후 1시 ~ 오후 6시
 - 장소 : 강남 토즈 (미정)
@@ -9,7 +9,7 @@
 
 ## 캐글뽀개기 스터디 : https://www.facebook.com/groups/kagglebreak
 
-![kagglebreak](./img/kagglebreak.png){:height="10%" width="10%"}
+![kagglebreak](./img/kagglebreak.png){:height="400px" width="400px"}
 
 ========================================================
 <br>
