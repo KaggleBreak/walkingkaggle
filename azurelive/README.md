@@ -5,7 +5,7 @@
 
 - 일시 : 2018년 9월 15일, 시간 오후 1시 ~ 오후 6시
 - 장소 : 강남 토즈 (미정)
-- 링크 : Fesat
+- 링크 : Festa
 
 ## 캐글뽀개기 스터디 : https://www.facebook.com/groups/kagglebreak
 
