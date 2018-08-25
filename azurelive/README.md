@@ -1,6 +1,6 @@
 # Saturday Azure live! 1809
 
-## 타이디(tidyverse)와 당근(caret)으로 캐글(kaggle) 입문하기
+## “Azure X Kaggle : 미국 택시요금 싸게 내는 법”
 ![](img/azurelive.png)
 
 - 일시 : 2018년 9월 15일, 시간 오후 1시 ~ 오후 6시
