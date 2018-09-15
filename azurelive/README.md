@@ -19,10 +19,10 @@
 | 12:30   | 참가자 등록 및 확인||
 | 13:00 ~ 14:00   | (첫 번째 시간) 캐글 및 데이터 분석 소개|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/azurelive/Saturday%20Azure%20live!%201809_%EC%BA%90%EA%B8%80%EB%BD%80%EA%B0%9C%EA%B8%B0.pdf)|
 | 14:00 ~ 14:20   | 쉬는 시간 + Q&A||
-| 14:20 ~ 15:30   | (두 번째 시간) R + Tidyverse + Boosting |[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/azurelive/01.%20R%20%2B%20Tidyverse%20%2B%20boosting%20%20%20.html)|
+| 14:20 ~ 15:30   | (두 번째 시간) R + Tidyverse + Boosting |[발표자료](https://htmlpreview.github.io/?https://github.com/KaggleBreak/walkingkaggle/blob/master/azurelive/01.%20R%20%2B%20Tidyverse%20%2B%20boosting%20%20%20.html)|
 | 15:30 ~ 15:50   | 쉬는 시간 + Q&A||
-| 15:50 ~ 17:20   | (세 번째 시간) Taxi Fare Prediction 대회 소개 및 탐색적 데이터 분석 |[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/azurelive/02.%20Taxi%20sparklyr%20EDA%20%2B%20ML.html)|
-| 17:20 ~ 18:00   | (네 번째 시간) Taxi Fare Prediction 모델 개발 및 제출 |[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/azurelive/03.%20Taxi%20Fare%20Prediction.html)|
+| 15:50 ~ 17:20   | (세 번째 시간) Taxi Fare Prediction 대회 소개 및 탐색적 데이터 분석 |[발표자료](https://htmlpreview.github.io/?https://github.com/KaggleBreak/walkingkaggle/blob/master/azurelive/02.%20Taxi%20sparklyr%20EDA%20%2B%20ML.html)|
+| 17:20 ~ 18:00   | (네 번째 시간) Taxi Fare Prediction 모델 개발 및 제출 |[발표자료](https://htmlpreview.github.io/?https://github.com/KaggleBreak/walkingkaggle/blob/master/azurelive/03.%20Taxi%20Fare%20Prediction.html)|
 
 
 ## 자료 링크
