@@ -26,7 +26,6 @@
 
 
 ## 자료 링크
-- 자료는 html로 다운로드 받아서 보시는게 좋습니다. 링크로는 Rmd 파일 연결해두었습니다.
-- 실습의 해당되는 코드는 github 및 링크를 통해 공유드립니다. 
-github을 clone 또는 download 해주시면 됩니다.
+- 자료는 html로 다운로드 받아서 보시는게 좋습니다. 링크로는 pdf / html viewer 파일 연결해두었습니다.
+- 실습의 해당되는 코드는 github 및 링크를 통해 공유드립니다. github을 clone 또는 download 해주시면 됩니다.
 - 워킹캐글(캐글뽀개기 스터디 이름) Github : [Tutorial Github](https://github.com/KaggleBreak/walkingkaggle)
