@@ -16,9 +16,9 @@
 
 | 발표 시간  | 튜토리얼 내용 | 발표자료 |
 | :------------ | :-----------: | :-----------: |
-| 14:00 ~ 14:50   | (첫 번째 시간) 캐글 및 캐글뽀개기 소개|[발표자료]()|
+| 14:00 ~ 14:50   | (첫 번째 시간) 캐글 및 캐글뽀개기 소개|[발표자료](https://github.com/KaggleBreak/walkingkaggle/blob/master/tutorial/jetbrainday/2018/JetbrainDay2018_%EC%BA%90%EA%B8%80%EB%BD%80%EA%B0%9C%EA%B8%B0%20%EC%86%8C%EA%B0%9C%20%EB%B0%8F%20%EC%BA%90%EA%B8%80%20%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC%20%ED%92%80%EA%B8%B0_v1.pdf)|
 | 14:50 ~ 15:10   | 쉬는 시간 + Q&A||
-| 15:10 ~ 15:50   | (두 번째 시간) 타이타닉 문제 소개 및 R 문법 기초 |[발표자료](https://www.kaggle.com/syleeie/jetbrain-days-kr-2018-r-basic-kagglebreak?scriptVersionId=7604388)|
+| 15:10 ~ 15:50   | (두 번째 시간) 타이타닉 문제 소개 및 R 문법 기초 |[발표자료](https://bit.ly/2Klmt7l)|
 | 15:50 ~ 16:10   | 쉬는 시간 + Q&A||
 | 16:10 ~ 16:45   | (세 번째 시간) 타이타닉 실습 시간|[발표자료](https://bit.ly/2A8uYhp)|
 
