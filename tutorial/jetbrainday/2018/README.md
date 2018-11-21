@@ -1,7 +1,7 @@
 # JetBrians Day 서울 2018
 
 ## 워크샵 : 캐글뽀개기 소개 및 캐글 튜토리얼 같이 풀어보기
-![jetbrain](./img/jetbrainday2018.png)
+![jetbrain](./img/jetbrainday2018.PNG)
 
 - 일시 : 2018년 11월 22일, 시간 오후 2시 ~ 오후 4시 45분
 - 장소 : 세종대학교 컨벤션센터
