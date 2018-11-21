@@ -1,4 +1,4 @@
-# JetBrians Day 서울 2018
+# JetBrians Day KR 2018
 
 ## 워크샵 : 캐글뽀개기 소개 및 캐글 튜토리얼 같이 풀어보기
 ![jetbrain](./img/jetbrainday2018.PNG)
