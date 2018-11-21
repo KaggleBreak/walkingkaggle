@@ -4,8 +4,8 @@
 ![jetbrain](./img/jetbrainday2018.png)
 
 - 일시 : 2018년 11월 22일, 시간 오후 2시 ~ 오후 4시 45분
-- 장소 : 강남 토즈타워점
-- 링크 : [Festa](https://info.jetbrains.com/jetbrains-day-seoul-2018.html)
+- 장소 : 세종대학교 컨벤션센터
+- 링크 : [Jetbrains](https://info.jetbrains.com/jetbrains-day-seoul-2018.html)
 
 ## 캐글뽀개기 스터디 : https://www.facebook.com/groups/kagglebreak
 
